@@ -77,7 +77,7 @@ namespace WebApp.Controllers
 
         }
 
-        //Borrar Datos de Tabla
+        //Borrar Tabla
         public ActionResult BorrarTabla()
         {
             return View();
@@ -96,12 +96,10 @@ namespace WebApp.Controllers
 
         }
 
-       
-
-
-        public ActionResult BorrarDeTabla(string x)
+        //Borrar Valores de Tabla
+        public ActionResult BorrarDeTabla()
         {
-            ViewBag.deleted = x;
+          
             return View();
         }
 
