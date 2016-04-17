@@ -1,0 +1,64 @@
+﻿<div class="">
+    <h3>MultiDataBase / Incluir Nuevo Servidor</h3>
+    <h4>Uso de función del API (/IncludeDB)</h4>
+</div>
+<div class="row">
+    
+    <div class="col-md-12 text-center panel" ng-controller="multiController">
+       
+            <form ng-submit="includeDB()">
+            <div class="panel-heading">
+                <a href="../App" type="button" class="btn btn-danger btn-lg pull-left"> <i class="fa fa-arrow-left"></i>Volver </a>
+                <h2>Insertar nueva base de datos</h2>
+                <p>Digite los datos necesarios para ingresar un nuevo servidor o base de datos.</p>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <p> <i class="fa fa-tags"></i> Detalles</p>
+                        <label>Tipo:</label>
+                        <select class="text-center input-lg" id="sel1" name="db_type" ng-model="db_type">
+                            <option>MongoDB</option>
+                            <option>MariaDB</option>
+                            <option>SQLDB</option>
+
+                        </select> <br /><br />
+                        <input placeholder="dbProtocol" class="input-lg" name="protocol" ng-model="protocol"/> <br /><br />
+                        <input placeholder="dbAllias" class="input-lg" type="text" name="alias" ng-model="alias"/><br /><br />
+                        
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <p><i class="fa fa-cog"></i> Configuración Usuario </p>
+                        <input placeholder="dbUser" class="input-lg" name="user" ng-model="username"/><br /><br />
+                        <input placeholder="dbPass" class="input-lg" name="pass" ng-model="pass"/><br /><br />
+
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <p> <i class="fa fa-cubes"> </i>Configuración Servidor</p>
+                        <input placeholder="dbServer" class="input-lg" name="server" ng-model="server" /><br /><br />
+                        <input placeholder="dbPort" class="input-lg" name="port" ng-model="port"/><br /><br />
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                       
+                        <button type="submit" class="btn btn-primary btn-lg pull-rigth"> Incluir Conexión</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </form>
+        
+    </div>
+    
+</div>

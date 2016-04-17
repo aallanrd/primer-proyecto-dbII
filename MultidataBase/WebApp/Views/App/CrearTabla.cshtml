@@ -1,0 +1,55 @@
+﻿<div class="">
+    <h3>MultiDataBase / Insertar nueva tabla</h3>
+    <h4>Uso de función del API (/insertTable)</h4>
+    <a href="../App" type="button" class="btn btn-danger btn-lg pull-left">
+        <i class="fa fa-arrow-left"></i>Volver
+    </a>
+</div>
+
+
+<div class="row " ng-controller="multiController">
+    <br /><br />
+    <hr />
+
+    
+    <form ng-submit="createTable()">
+       
+            <h2>Configuración </h2>
+            <input placeholder="Id Conección" class="input-sm" type="number" name="cID" ng-model="cID" />
+            <input placeholder="Table Name" class="input-sm" ng-model="name" />
+            <button type="submit" class="btn btn-primary btn-lg"> Crear Tabla</button>
+       
+    </form>
+
+    <form ng-submit="addColumn()">
+       
+            <h2>Columnas</h2>
+           
+            <div class="col-md-4">
+                <input placeholder="Nombre" class="input-lg" ng-model="Cname" /> <br /><br />
+                <input placeholder="Tipo" class="input-lg" ng-model="Ctype" /><br /><br />
+                <input placeholder="Longitud" class="input-lg" ng-model="Clength" /><br /><br />
+
+                <button class="btn btn-primary" type="submit">Add</button>
+               
+            </div>
+            <div class="col-md-4">
+               
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="col in todas">
+                        {{col.name}}
+                        <span class="badge pull-right">{{col.type}}</span>
+                        <span class="badge pull-right">{{col.length}}</span>
+                    </li>
+
+                </ul>
+            </div>
+  
+       
+    </form>
+
+    
+
+</div>
+
+
