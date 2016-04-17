@@ -186,12 +186,13 @@ namespace ServicioWEB.Controladores
             {
                 try
                 {                 
-                    string Query = "delete table " + table_name ;
+                    string Query = "DROP TABLE IF EXISTS " + table_name ;
 
                     MySqlCommand cmd = new MySqlCommand(Query, newConnection.connection);
 
                     cmd.ExecuteNonQuery();
-                    return "{ 'msg':  'Eliminada correctamente'}";
+                    
+                    return "{ 'msg':  'Bloque ejecutado correctamente', 'query':'"+Query+"'}";
                 }
                 catch (Exception e)
                 {

@@ -74,7 +74,7 @@ multiDBApp.controller('multiController', function ($scope,$http) {
         $http.post('../App/HttpDeleteTable?cID=' + $scope.cID + '&table_name=' + $scope.name ,
             { data: {} })
         .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
+            alert(data);
         })
         .error(function (data, status, headers, config) {
             alert("Ups! Hubo un error en la solicitud REST");

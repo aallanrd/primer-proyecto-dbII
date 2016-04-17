@@ -140,17 +140,16 @@ namespace WebApp.Controllers
         }
 
         /*
- 8.   /getConnections (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+ 8.   /getConnections (https://github.com/aallanrd/primer-proyecto-dbII#getConnections)
      @Http Call from View to Call Service API Function : client.deleteTable(JSON)
      @Params (int cID, string table_name)
      @Return JSON 
      */
         [HttpPost]
-        public JsonResult HttpDeleteValueTable(int cID, string table_name, string values)
+        public JsonResult HttpGetConnections()
         {
-            DeleteFromTable dFT = new DeleteFromTable(cID, table_name, values);
-            var jsonDVT = JsonConvert.SerializeObject(dFT);
-            string x = client.deleteValuesTable(jsonDVT);
+
+            string x = client.getConnections();
             return new JsonResult { Data = x };
 
         }
@@ -173,6 +172,7 @@ namespace WebApp.Controllers
 
         public ActionResult IncluirDB()         { return View(); }
 
+
         public ActionResult VerConexiones()
         {
             string x = client.getConnections();
@@ -182,17 +182,6 @@ namespace WebApp.Controllers
 
             return View();
         }
-
-        public JsonResult HttpGetConn()
-        {
-
-            string x = client.getConnections();
-
-            return new JsonResult { Data = x };
-
-
-        }
-
 
         // App/CheckConnection?a=1
         // Chequea una conexion especifica por ID 
