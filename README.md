@@ -20,12 +20,13 @@ Multidatabase/Proyecto Multidatabase.sln
 
 ## Requerimientos
 
-```Instalaciones *(Por NuggetPM)
+```
+Instalaciones (Por NuggetPM)
 
 
-###Mongo :       (PM> Install-Package mongocsharpdriver)	https://www.nuget.org/packages/mongocsharpdriver
-###MariaDB :  a. (PM> Install-Package MySql.Data)		https://www.nuget.org/packages/MySql.Data/  
-	    b. metadatadb, check configParams on (WebApp/Controllers/aMariaDBController)	
+Mongo :       (PM> Install-Package mongocsharpdriver)	https://www.nuget.org/packages/mongocsharpdriver
+MariaDB :  a. (PM> Install-Package MySql.Data)		https://www.nuget.org/packages/MySql.Data/  
+	      b. metadatadb, check configParams on (WebApp/Controllers/aMariaDBController)	
 
 ```
 
