@@ -43,9 +43,9 @@ por medio de JSON, las cuales se pueden llamar creando un cliente del servicio d
 
 ##   Service1Client client = new Service1Client();
 
-#### client.includeDB(JSON) : 
+##### client.includeDB (JSON) : 
 	
-	Incluye una nueva conexion en servidor local, para estar realizando consultas o procedimientos sobre ella.
+	_Incluye una nueva conexion en servidor local, para estar realizando consultas o procedimientos sobre ella.
 	JSON Paráms: 
 		string db_type: Tipo de servidor al que queremos conectarnos. Ej.(MariaDB,SQLDB,MongoDB)  
 		string username : Usuario Autorizado de la Base de Datos . Ej. (root)
@@ -59,9 +59,9 @@ por medio de JSON, las cuales se pueden llamar creando un cliente del servicio d
 
 	@retorna : 
 
-##### client.createDB(JSON): 
+##### client.createDB (JSON): 
 
-	Crea una nueva base datos en la conexión seleccionada
+	_Crea una nueva base datos en la conexión seleccionada
 
 	JSON Paráms :
 		int idC : Id de la conexion a la que queremos enlazarnos
@@ -73,7 +73,7 @@ por medio de JSON, las cuales se pueden llamar creando un cliente del servicio d
 
 ##### client.createTable (JSON)
 
-	Crea una nueva tabla en el servidor de BD seleccionado.
+	_Crea una nueva tabla en el servidor de BD seleccionado.
 	
 	JSON Paráms :
 		int idC : Id de la conexion a la que queremos enlazarnos
@@ -83,19 +83,27 @@ por medio de JSON, las cuales se pueden llamar creando un cliente del servicio d
 	Ej.JSON : { "idC" : 1 , "table_name": "xyzDB" , "columns":  } 
 	
 
-##### /deleteTable
+##### client.deleteTable (JSON)
 
-##### /multipleQuery
+	_Elimina una tabla en el servidor de BD seleccionado.
+	
+	JSON Paráms :
+		int idC : Id de la conexion a la que queremos enlazarnos
+		string table_name : Nombre de la nueva base de datos
+		
+
+	Ej.JSON : { "idC" : 1 , "table_name": "xyzDB"  } 
+
 
 ##### /insertValuesTable
 
+##### /updateValuesTable
 
 ##### /updateValuesTable
 
-##### /multipleQuery
-
 ##### /getConecctions
 
+##### /multipleQuery
 
 
 ## Team
