@@ -38,11 +38,14 @@ MariaDB :  a. (PM> Install-Package MySql.Data)		https://www.nuget.org/packages/M
 
 ##### rutas
 
-El proyeco del servicio expone las siguientes funciones, cada una de ellas recibe su lista de parámetros
-por medio de JSON
+El proyecto del servicio expone las siguientes funciones, cada una de ellas recibe su lista de parámetros
+por medio de JSON, las cuales se pueden llamar creando un cliente del servicio de la forma
 
-##### /includeDB (JSON) : Incluye una nueva conexion en servidor local, para estar realizando consultas o 
-			  procedimientos sobre ella.
+##   Service1Client client = new Service1Client();
+
+#### client.includeDB(JSON) : 
+	
+	Incluye una nueva conexion en servidor local, para estar realizando consultas o procedimientos sobre ella.
 	JSON Paráms: 
 		string db_type: Tipo de servidor al que queremos conectarnos. Ej.(MariaDB,SQLDB,MongoDB)  
 		string username : Usuario Autorizado de la Base de Datos . Ej. (root)
@@ -54,14 +57,31 @@ por medio de JSON
 	
 	Ej.JSON  : { "db_type" : "SQLDB" , "username": "root" , ... }
 
-##### /createDB (JSON): Crea una nueva base datos en la conexión seleccionada
+	@retorna : 
+
+##### client.createDB(JSON): 
+
+	Crea una nueva base datos en la conexión seleccionada
 
 	JSON Paráms :
 		int idC : Id de la conexion a la que queremos enlazarnos
 		string db_name : Nombre de la nueva base de datos
-	Ej.JSON : { "idC" : 1 , "db_name": "xyzDB" } 
 
-##### /createTable
+	Ej.JSON : { "idC" : 1 , "db_name": "xyzDB" } 
+	
+	@retorna : 
+
+##### client.createTable (JSON)
+
+	Crea una nueva tabla en el servidor de BD seleccionado.
+	
+	JSON Paráms :
+		int idC : Id de la conexion a la que queremos enlazarnos
+		string table_name : Nombre de la nueva base de datos
+		string columnas : Concatenacion de las columnas que el usuario decida crear
+
+	Ej.JSON : { "idC" : 1 , "table_name": "xyzDB" , "columns":  } 
+	
 
 ##### /deleteTable
 
