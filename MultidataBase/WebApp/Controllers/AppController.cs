@@ -15,13 +15,14 @@ namespace WebApp.Controllers
         // CLiente del Servicio Web 
         Service1Client client = new Service1Client();
 
-        // Index : Retorna vista de seleccion de funciónes.
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        // includeDB FORM API Request
+
+        /*
+          1.  /includeDB 
+               Http Call from View
+               @Params (string db_type, string username, string pass, string server, string protocol, int port, string alias)
+        */
+
         [HttpPost]
         public JsonResult HttpIncludeDB(
             string db_type, string username, string pass,
@@ -32,6 +33,18 @@ namespace WebApp.Controllers
             var jsonIDB = JsonConvert.SerializeObject(dbV);
             string x = client.includeDB(jsonIDB);
 
+            return new JsonResult { Data = x };
+
+
+        }
+
+        [HttpPost]
+        public JsonResult HttpCreateDB(int cID, string db_name)
+        {
+
+            DatabaseVM dbV = new DatabaseVM(cID, db_name);
+            var jsonCDB = JsonConvert.SerializeObject(dbV);
+            string x = client.createDatabase(jsonCDB);
             return new JsonResult { Data = x };
 
 
@@ -138,17 +151,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public JsonResult HttpCreateDB(int cID, string db_name)
-        {
-
-            DatabaseVM dbV = new DatabaseVM(cID, db_name);
-            var jsonCDB = JsonConvert.SerializeObject(dbV);
-            string x = client.createDatabase(jsonCDB);
-            return new JsonResult { Data = x };
-
-
-        }
+       
 
         // Incluir DB en MetaData
         public ActionResult IncluirDB(string x )
