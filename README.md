@@ -29,19 +29,12 @@ MariaDB :  a. (PM> Install-Package MySql.Data)		https://www.nuget.org/packages/M
 	      b. metadatadb, check configParams on (WebApp/Controllers/aMariaDBController)	
 
 ```
-
-## API
-
-### Multidatabase([API])
-
-#### API
-
-##### rutas
+## Multidatabase(API)
 
 El proyecto del servicio expone las siguientes funciones, cada una de ellas recibe su lista de parámetros
 por medio de JSON, las cuales se pueden llamar creando un cliente del servicio de la forma
 
-##   Service1Client client = new Service1Client();
+@ * Service1Client client = new Service1Client(); *
 
 ##### client.includeDB (JSON) : 
 	
