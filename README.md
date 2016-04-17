@@ -38,8 +38,9 @@ Multidatabase/Proyecto Multidatabase.sln
 El proyeco del servicio expone las siguientes funciones, cada una de ellas recibe su lista de parámetros
 por medio de JSON
 
-##### /includeDB
-       Paráms: 
+##### /includeDB (JSON) : Incluye una nueva conexion en servidor local, para estar realizando consultas o 
+			  procedimientos sobre ella.
+	JSON Paráms: 
 		string db_type: Tipo de servidor al que queremos conectarnos. Ej.(MariaDB,SQLDB,MongoDB)  
 		string username : Usuario Autorizado de la Base de Datos . Ej. (root)
 		string pass   : Contraseña del Usuario de la Base de Datos ---
@@ -47,10 +48,15 @@ por medio de JSON
 		string protocol : Protocolo de comunicacion que utiliza el servidor. Ej( TCp/IP , MySQL/TCP )
 		int port: Puerto principal donde esta corriendo el servidor . Ej. (27017,1440,3306) 
 		string alias : Nombre adjunto a esta conexión.
+	
+	Ej.JSON  : { "db_type" : "SQLDB" , "username": "root" , ... }
 
-       JSON  : { "db_type" : "SQLDB" , "username": "root" , ... }
+##### /createDB (JSON): Crea una nueva base datos en la conexión seleccionada
 
-##### /createDB
+	JSON Paráms :
+		int idC : Id de la conexion a la que queremos enlazarnos
+		string db_name : Nombre de la nueva base de datos
+	Ej.JSON : { "idC" : 1 , "db_name": "xyzDB" } 
 
 ##### /createTable
 
@@ -59,6 +65,7 @@ por medio de JSON
 ##### /multipleQuery
 
 ##### /insertValuesTable
+
 
 ##### /updateValuesTable
 
