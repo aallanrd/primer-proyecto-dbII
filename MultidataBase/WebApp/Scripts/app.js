@@ -10,11 +10,11 @@ multiDBApp.controller('multiController', function ($scope,$http) {
   
     };
 
-    // API F 1
-    $scope.createTable = function () {
+  
+    $scope.createTable = function ()     {
 
         
-        $scope.retData = {};
+       
     
         var json = JSON.stringify($scope.todas);
 
@@ -29,10 +29,7 @@ multiDBApp.controller('multiController', function ($scope,$http) {
         });
        
     }
-
-    // API F 2
-
-    $scope.includeDB = function () {
+    $scope.includeDB = function ()      {
 
         shuffle_b(false);
 
@@ -57,8 +54,6 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
        
     }
-
-    // API F 3
     $scope.createDB = function () {
 
         $http.post('../App/HttpCreateDB?cID=' + $scope.cID + '&db_name=' + $scope.db_name,
@@ -72,7 +67,21 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
         });
     }
+    $scope.deleteTable = function () {
 
+        var json = JSON.stringify($scope.todas);
+
+        $http.post('../App/HttpDeleteTable?cID=' + $scope.cID + '&table_name=' + $scope.name ,
+            { data: {} })
+        .success(function (data, status, headers, config) {
+            alert("Listo! Parece que todo salió bien");
+        })
+        .error(function (data, status, headers, config) {
+            alert("Ups! Hubo un error en la solicitud REST");
+
+        });
+
+    }
       
 }).config(function ($httpProvider) {
     $httpProvider.defaults.headers.post = {};

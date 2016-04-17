@@ -177,6 +177,37 @@ namespace ServicioWEB.Controladores
 
         }
 
+        //Crear una nueva tabla en una instancia de MariaDB
+        public string deleteTable(dbModel db, string table_name)
+        {
+
+            MariaDBConnect newConnection = new MariaDBConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                try
+                {                 
+                    string Query = "delete table " + table_name ;
+
+                    MySqlCommand cmd = new MySqlCommand(Query, newConnection.connection);
+
+                    cmd.ExecuteNonQuery();
+                    return "{ 'msg':  'Eliminada correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error eliminando'}";
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
+
+        }
+
+
         //Obtener una conexión específica por Identificador de Conexión.
         public dbModel getConnection(int cID)
         {

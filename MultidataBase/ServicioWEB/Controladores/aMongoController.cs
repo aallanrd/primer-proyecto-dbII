@@ -104,6 +104,11 @@ namespace ServicioWEB.Controladores
                 return e.ToString();
             }
         }
+
+        internal string deleteTable(dbModel model, string table_name)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

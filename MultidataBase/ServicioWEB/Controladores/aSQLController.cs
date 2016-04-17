@@ -150,5 +150,9 @@ namespace ServicioWEB.Controladores
 
         }
 
+        internal string deleteTable(dbModel model, string table_name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

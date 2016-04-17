@@ -177,6 +177,7 @@
     <Compile Include="Modelo\database.cs" />
     <Compile Include="Modelo\dbModel.cs" />
     <Compile Include="Controladores\InterfaceDB.cs" />
+    <Compile Include="Modelo\deleteTable.cs" />
     <Compile Include="Modelo\table.cs" />
     <Compile Include="Proveedores\MariaDBConnect.cs" />
     <Compile Include="Proveedores\MongoConnect.cs" />

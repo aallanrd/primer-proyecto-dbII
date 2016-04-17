@@ -40,7 +40,7 @@ namespace ServicioWEB
                     }
                     else
                     {
-                        return "No hay conexion con esta instancia de MariaDB ";
+                        return "{ 'msg' : 'No hay conexion con esta instancia de Maria' }";
                     }
 
                 case "MongoDB":
@@ -51,7 +51,7 @@ namespace ServicioWEB
                     }
                     else
                     {
-                        return "No hay conexion con esta instancia de MongoDB ";
+                        return "{ 'msg' : 'No hay conexion con esta instancia de Mongo' }";
                     }
 
 
@@ -63,7 +63,7 @@ namespace ServicioWEB
                     }
                     else
                     {
-                        return "No hay conexion con esta instancia de SQLDB ";
+                        return "{ 'msg' : 'No hay conexion con esta instancia de SQL' }";
                     }
 
 
@@ -71,7 +71,6 @@ namespace ServicioWEB
             }
 
         }
-
 
         //Crear una nueva base de datos en cualquier servidor/instancia registrada
         public string createDB(string jsonCDB)
@@ -99,10 +98,12 @@ namespace ServicioWEB
 
         }
 
+        //Crea una nueva tabla en el servidor de BD seleccionado.
         public string createTable(string jsonCT)
         {
             //int iC, string name, ArrayList columnas
-            // string json = "{ 'cID': 'idConexion', 'table_name':'TableName', columnas:	[{ alias:	“alias”, nombre:“nombre”,tipo:  “tipo”, null:	true / false },...]}";
+            // string json = "{ 'cID': 'idConexion', 'table_name':'TableName', columnas:	
+            //[{ alias:	“alias”, nombre:“nombre”,tipo:  “tipo”, null:	true / false },...]}";
             table table = JsonConvert.DeserializeObject<table>(jsonCT);
             int idC = table.cID;
             string columnas = table.columnas;   
@@ -113,9 +114,9 @@ namespace ServicioWEB
             {
                 switch (model.dbType)
                 {
-                    case "MariaDB": return controlMaria.createTable(model,table.table_name,cll);
-                    case "MongoDB": return controlMongo.createTable(model, table.table_name, cll);
-                    case "SQLDB": return controlSQL.createTable(model, table.table_name, cll);
+                    case "MariaDB": return controlMaria.createTable (model, table.table_name, cll);
+                    case "MongoDB": return controlMongo.createTable (model, table.table_name, cll);
+                    case "SQLDB": return controlSQL.createTable     (model, table.table_name, cll);
                     default: return "Cant Check";
                 }
 
@@ -128,9 +129,31 @@ namespace ServicioWEB
             
         }
 
-        public void deleteTable()
+        //Elimina una tabla en el servidor de BD seleccionado.
+        public string deleteTable(string jsonDT)
         {
-            throw new NotImplementedException();
+            //int iC, string name, ArrayList columnas
+            // string json = "{ 'cID': 'idConexion', 'table_name':'TableName', columnas:	
+            //[{ alias:	“alias”, nombre:“nombre”,tipo:  “tipo”, null:	true / false },...]}";
+            deleteTable table = JsonConvert.DeserializeObject<deleteTable>(jsonDT);
+            int idC = table.cID;
+ 
+            dbModel model = controlMaria.getConnection(idC);
+            if (model != null)
+            {
+                switch (model.dbType)
+                {
+                    case "MariaDB": return controlMaria.deleteTable (model, table.table_name);
+                    case "MongoDB": return controlMongo.deleteTable (model, table.table_name);
+                    case "SQLDB": return controlSQL.deleteTable     (model, table.table_name);
+                    default: return "Cant Check";
+                }
+
+            }
+            else
+            {
+                return "Not checked";
+            }
         }
 
         public string getConecctions()
@@ -167,10 +190,6 @@ namespace ServicioWEB
 
       
 
-        public string deleteTable(string jsonDT)
-        {
-            throw new NotImplementedException();
-        }
 
         public string multipleQuery(string jsonMQ)
         {

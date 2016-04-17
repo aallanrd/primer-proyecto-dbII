@@ -15,18 +15,16 @@ namespace WebApp.Controllers
         // CLiente del Servicio Web 
         Service1Client client = new Service1Client();
 
-
-
         /*
-          1.  /includeDB 
-               Http Call from View
-               @Params (string db_type, string username, string pass, string server, string protocol, int port, string alias)
+          1.   /includeDB (https://github.com/aallanrd/primer-proyecto-dbII#includedb)
+               @Http Call from View to Call Service API Function : client.includeDB(JSON)
+               @Params (string db_type, string username, string pass, string server, 
+               string protocol, int port, string alias)
+               @Return JSON 
         */
 
         [HttpPost]
-        public JsonResult HttpIncludeDB(
-            string db_type, string username, string pass,
-            string server, string protocol, int port, string alias)
+        public JsonResult HttpIncludeDB(string db_type, string username, string pass, string server, string protocol, int port, string alias)
         {
 
             IncludeDbVm dbV = new IncludeDbVm(db_type, username, pass, server, protocol, port, alias);
@@ -37,6 +35,13 @@ namespace WebApp.Controllers
 
 
         }
+
+        /*
+    2.   /createDatabase (https://github.com/aallanrd/primer-proyecto-dbII#createdb)
+         @Http Call from View to Call Service API Function : client.createDatabase(JSON)
+         @Params (int cID, string db_name)
+         @Return JSON 
+       */
 
         [HttpPost]
         public JsonResult HttpCreateDB(int cID, string db_name)
@@ -49,35 +54,47 @@ namespace WebApp.Controllers
 
 
         }
-
-
-
-
-        //  App/CrearTabla
-        public ActionResult CrearTabla()
-        {
-            return View();
-        }
+        /*
+    3.   /createTable (https://github.com/aallanrd/primer-proyecto-dbII#createTable)
+        @Http Call from View to Call Service API Function : client.createTable(JSON)
+        @Params (int cID, string name, string columns)
+        @Return JSON 
+        */
 
         [HttpPost]
-        public JsonResult HttpCreateTable(int cID, string name,string columns)
+        public JsonResult HttpCreateTable(int cID, string name, string columns)
         {
 
             CreateTableVM t = new CreateTableVM(cID, name, columns);
-            var jsonCT = JsonConvert.SerializeObject(t); 
+            var jsonCT = JsonConvert.SerializeObject(t);
             string x = client.createTable(jsonCT);
             client.Close();
-            return new JsonResult { Data = x};
+            return new JsonResult { Data = x };
 
         }
 
-        // App Insertar Valores en Tabla
-        public ActionResult InsertarTabla( )
+        /*
+       4.   /deleteTable (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+           @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+           @Params (int cID, string table_name)
+           @Return JSON 
+           */
+        [HttpPost]
+        public JsonResult HttpDeleteTable(int cID, string table_name)
         {
-            return View();
+
+            DeleteTableVM t = new DeleteTableVM(cID, table_name);
+            var jsonDT = JsonConvert.SerializeObject(t);
+            string x = client.deleteTable(jsonDT);
+            return new JsonResult { Data = x };
+
         }
-
-
+        /*
+     5.   /insertValuesTable (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+         @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+         @Params (int cID, string table_name)
+         @Return JSON 
+         */
         [HttpPost]
         public JsonResult HttpInsertValueTable(int cID, string table_name, string values)
         {
@@ -89,51 +106,29 @@ namespace WebApp.Controllers
 
         }
 
-        //Actualizar valores de tabla
-        public ActionResult ActualizarTabla()
-        {
-          
-            return View();
-        }
-
-
+        /*
+        6.   /updateValuesTable (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+                 @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+                 @Params (int cID, string table_name)
+                 @Return JSON 
+                 */
         [HttpPost]
         public JsonResult HttpUpdateTable(int cID, string table_name, string values)
         {
             UpdateTableVM t = new UpdateTableVM(cID, table_name, values);
             var jsonAVT = JsonConvert.SerializeObject(t);
             //db_type, db_name
-            string x = client.deleteTable(jsonAVT);
+            string x = client.updateValuesTable(jsonAVT);
             return new JsonResult { Data = x };
 
         }
 
-        //Borrar Tabla
-        public ActionResult BorrarTabla()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public JsonResult HttpDeleteTable(int cID, string table_name)
-        {
-
-            DeleteTableVM t = new DeleteTableVM(cID, table_name);
-            var jsonDT = JsonConvert.SerializeObject(t);
-            //db_type, db_name
-            string x = client.deleteTable(jsonDT);
-            return new JsonResult { Data = x };
-
-        }
-
-        //Borrar Valores de Tabla
-        public ActionResult BorrarDeTabla()
-        {
-          
-            return View();
-        }
-
+        /*
+     7.   /deleteValuesTable (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+         @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+         @Params (int cID, string table_name)
+         @Return JSON 
+         */
         [HttpPost]
         public JsonResult HttpDeleteValueTable(int cID, string table_name, string values)
         {
@@ -144,25 +139,40 @@ namespace WebApp.Controllers
 
         }
 
-       //Crear una base de Datos
-        public ActionResult CrearDB()
+        /*
+ 8.   /getConnections (https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+     @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+     @Params (int cID, string table_name)
+     @Return JSON 
+     */
+        [HttpPost]
+        public JsonResult HttpDeleteValueTable(int cID, string table_name, string values)
         {
-            
-            return View();
+            DeleteFromTable dFT = new DeleteFromTable(cID, table_name, values);
+            var jsonDVT = JsonConvert.SerializeObject(dFT);
+            string x = client.deleteValuesTable(jsonDVT);
+            return new JsonResult { Data = x };
+
         }
 
-       
 
-        // Incluir DB en MetaData
-        public ActionResult IncluirDB(string x )
-        {
-            ViewBag.created = x;
-            return View();
-        }
 
+        public ActionResult CrearTabla()        { return View(); }
+     
+        public ActionResult InsertarTabla( )    { return View(); }
         
+        public ActionResult ActualizarTabla()   { return View(); }
+      
+        public ActionResult BorrarTabla()       { return View(); }
+        
+        public ActionResult Index()             { return View(); }
 
-        // Ver todas las conexiones disponibles.  
+        public ActionResult BorrarDeTabla()     { return View(); }
+
+        public ActionResult CrearDB()           { return View(); }
+
+        public ActionResult IncluirDB()         { return View(); }
+
         public ActionResult VerConexiones()
         {
             string x = client.getConnections();

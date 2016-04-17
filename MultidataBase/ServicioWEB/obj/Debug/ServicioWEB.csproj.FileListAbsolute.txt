@@ -49,3 +49,4 @@ D:\Apps\multidatabase\MultidataBase\ServicioWEB\bin\System.Web.WebPages.Deployme
 D:\Apps\multidatabase\MultidataBase\ServicioWEB\bin\System.Web.WebPages.Razor.xml
 D:\Apps\multidatabase\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.dll
 D:\Apps\multidatabase\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.pdb
+D:\Apps\multidatabase\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.csprojResolveAssemblyReference.cache
