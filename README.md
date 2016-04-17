@@ -3,7 +3,7 @@ A Multidatabase Project for ITCR Course Bases Datos II
 
  API Description
 
-# ![multidatabase](media/promo.png)
+# ![multidatabase](media/promo.jpg)
 
 Sistema Multidatabase para conexiones y consultas a multiples servidores de BD.
 

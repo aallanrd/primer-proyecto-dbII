@@ -87,3 +87,4 @@ D:\Apps\multidatabase\MultidataBase\WebApp\bin\Microsoft.Owin.Security.Microsoft
 D:\Apps\multidatabase\MultidataBase\WebApp\bin\System.Web.Http.Owin.xml
 D:\Apps\multidatabase\MultidataBase\WebApp\obj\Debug\WebApp.dll
 D:\Apps\multidatabase\MultidataBase\WebApp\obj\Debug\WebApp.pdb
+D:\Apps\multidatabase\MultidataBase\WebApp\obj\Debug\WebApp.csprojResolveAssemblyReference.cache

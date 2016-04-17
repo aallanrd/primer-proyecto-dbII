@@ -3,7 +3,6 @@
 multiDBApp.controller('multiController', function ($scope,$http) {
 
     
-
     $scope.todas = [];
     
     $scope.addColumn = function () {
@@ -30,24 +29,36 @@ multiDBApp.controller('multiController', function ($scope,$http) {
         });
        
     }
+
     // API F 2
 
     $scope.includeDB = function () {
+
+        shuffle_b(false);
 
         $http.post('../App/HttpIncludeDB?db_type=' + $scope.db_type + '&username=' + $scope.username
             + '&pass=' + $scope.pass + '&server=' + $scope.server + '&protocol=' + $scope.protocol
             + '&port=' + $scope.port + '&alias=' + $scope.alias,
             { data: {} })
         .success(function (data, status, headers, config) {
-
-            alert("Listo! Parece que todo salió bien, chequea en HeidiSQL");
+         
+            shuffle_b(true);
+            alert(data);
+            
+           
         })
         .error(function (data, status, headers, config) {
+            shuffle_b(true);
             alert("Ups! Hubo un error en la solicitud REST");
 
         });
+
+        
+
+       
     }
 
+    // API F 3
     $scope.createDB = function () {
 
         $http.post('../App/HttpCreateDB?cID=' + $scope.cID + '&db_name=' + $scope.db_name,

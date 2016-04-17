@@ -5,16 +5,16 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class DTable
+    public class DeleteTableVM
     {
         public int cID { get; set; }
 
         public string table_name { get; set; }
 
        
-        public DTable() { }
+        public DeleteTableVM() { }
 
-        public DTable(int cID, string nombre)
+        public DeleteTableVM(int cID, string nombre)
         {
             this.cID = cID;
             this.table_name = nombre;

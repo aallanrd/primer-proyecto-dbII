@@ -21,6 +21,24 @@ namespace WebApp.Controllers
             return View();
         }
 
+        // includeDB FORM API Request
+        [HttpPost]
+        public JsonResult HttpIncludeDB(
+            string db_type, string username, string pass,
+            string server, string protocol, int port, string alias)
+        {
+
+            IncludeDbVm dbV = new IncludeDbVm(db_type, username, pass, server, protocol, port, alias);
+            var jsonIDB = JsonConvert.SerializeObject(dbV);
+            string x = client.includeDB(jsonIDB);
+
+            return new JsonResult { Data = x };
+
+
+        }
+
+
+
 
         //  App/CrearTabla
         public ActionResult CrearTabla()
@@ -50,7 +68,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public JsonResult HttpInsertValueTable(int cID, string table_name, string values)
         {
-            ITable t = new ITable(cID, table_name, values);
+            InsertTableVM t = new InsertTableVM(cID, table_name, values);
             var jsonIVT = JsonConvert.SerializeObject(t);
             //db_type, db_name
             string x = client.insertValuesTable(jsonIVT);
@@ -88,7 +106,7 @@ namespace WebApp.Controllers
         public JsonResult HttpDeleteTable(int cID, string table_name)
         {
 
-            DTable t = new DTable(cID, table_name);
+            DeleteTableVM t = new DeleteTableVM(cID, table_name);
             var jsonDT = JsonConvert.SerializeObject(t);
             //db_type, db_name
             string x = client.deleteTable(jsonDT);
@@ -104,55 +122,44 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult HttpDeleteValueTable(string jsonDVT)
+        public JsonResult HttpDeleteValueTable(int cID, string table_name, string values)
         {
-            //db_type, db_name
+            DeleteFromTable dFT = new DeleteFromTable(cID, table_name, values);
+            var jsonDVT = JsonConvert.SerializeObject(dFT);
             string x = client.deleteValuesTable(jsonDVT);
-            return RedirectToAction("BorrarDeTabla", new { x = x });
+            return new JsonResult { Data = x };
 
         }
 
-    
-        public ActionResult CrearDB(string x)
+       //Crear una base de Datos
+        public ActionResult CrearDB()
         {
-            ViewBag.created = x;
+            
             return View();
         }
 
         [HttpPost]
-        public ActionResult HttpCreateDB(int cID, string db_name)
+        public JsonResult HttpCreateDB(int cID, string db_name)
         {
 
-            DatabaseViewModel dbV = new DatabaseViewModel(cID, db_name);
+            DatabaseVM dbV = new DatabaseVM(cID, db_name);
             var jsonCDB = JsonConvert.SerializeObject(dbV);
-            //db_type, db_name
             string x = client.createDatabase(jsonCDB);
-            return RedirectToAction("CrearDB", new { x = x });
-           
-          
+            return new JsonResult { Data = x };
+
+
         }
 
-
+        // Incluir DB en MetaData
         public ActionResult IncluirDB(string x )
         {
             ViewBag.created = x;
             return View();
         }
 
-        [HttpPost]
-        public ActionResult HttpIncludeDB(string db_type,string username,string pass,string server,string protocol,int port,string alias)
-        {
+        
 
-            IncludeDbVm dbV = new IncludeDbVm(db_type, username, pass, server, protocol, port, alias);
-            var jsonIDB = JsonConvert.SerializeObject(dbV);
-            string x = client.includeDB(jsonIDB);
-
-            return RedirectToAction("IncluirDB", new { x = x });
-
-
-        }
-
-        // GET:     
+        // Ver todas las conexiones disponibles.  
         public ActionResult VerConexiones()
         {
             string x = client.getConnections();
@@ -161,6 +168,16 @@ namespace WebApp.Controllers
 
 
             return View();
+        }
+
+        public JsonResult HttpGetConn()
+        {
+
+            string x = client.getConnections();
+
+            return new JsonResult { Data = x };
+
+
         }
 
 

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class InsertTableVM
+    public class DeleteFromTable
     {
         public int cID { get; set; }
 
@@ -13,13 +13,13 @@ namespace WebApp.Models
 
         public string values { get; set; }
 
-        public InsertTableVM() { }
+        public DeleteFromTable() { }
 
-        public InsertTableVM(int cID, string nombre, string values)
+        public DeleteFromTable(int cID, string nombre, string values)
         {
             this.cID = cID;
             this.table_name = nombre;
-            this.values = values;
+            this.values = values;   
         }
     }
 }
