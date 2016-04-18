@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServicioWEB.Modelo
 {
-    public class dbModel
+    public class DBModel
     {
         public string dbType { get; set; }
         public string username { get; set; }
@@ -18,11 +18,11 @@ namespace ServicioWEB.Modelo
         public int port { get; set; }
         public string alias { get; set; }
 
-        public dbModel()
+        public DBModel()
         {
 
         }
-        public dbModel(string dbType, string username,string pass, string server,string protocol,int port,string alias )
+        public DBModel(string dbType, string username,string pass, string server,string protocol,int port,string alias )
         {
             this.dbType = dbType;
             this.username = username;

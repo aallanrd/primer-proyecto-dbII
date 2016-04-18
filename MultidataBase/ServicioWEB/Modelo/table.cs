@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ServicioWEB.Modelo
 {
-    public class table
+    public class Table
     {
 
         public int cID { get; set; }
@@ -15,9 +15,9 @@ namespace ServicioWEB.Modelo
       
         public string columnas { get; set; }
 
-        public table() { }
+        public Table() { }
 
-        public table(int cID,string nombre, string columnas)
+        public Table(int cID,string nombre, string columnas)
         {
             this.table_name = nombre;
             this.columnas = columnas;

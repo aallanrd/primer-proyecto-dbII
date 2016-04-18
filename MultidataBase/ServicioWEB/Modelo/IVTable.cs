@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ServicioWEB.Modelo
 {
-    public class itable
+    public class IVTable
     {
         public int cID { get; set; }
 
@@ -13,9 +13,9 @@ namespace ServicioWEB.Modelo
 
         public string values { get; set; }
 
-        public itable() { }
+        public IVTable() { }
 
-        public itable(int cID, string nombre, string values)
+        public IVTable(int cID, string nombre, string values)
         {
             this.cID = cID;
             this.table_name = nombre;

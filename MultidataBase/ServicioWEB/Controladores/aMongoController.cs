@@ -17,7 +17,7 @@ namespace ServicioWEB.Controladores
            
             
         } 
-        public string includeDB(dbModel m)
+        public string includeDB(DBModel m)
         {
             conexion = new MongoConnect(m.port,m.server);
             if (conexion.OpenConnection().Equals("Connected"))
@@ -33,7 +33,7 @@ namespace ServicioWEB.Controladores
         }
 
 
-        public  string createDB(dbModel m, string database_name)
+        public  string createDB(DBModel m, string database_name)
         {
             conexion = new MongoConnect(m.port,m.server);
             if (conexion.OpenConnection().Equals("Connected"))
@@ -54,7 +54,7 @@ namespace ServicioWEB.Controladores
 
         }
 
-        public string check(dbModel model)
+        public string check(DBModel model)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        public string consultDB(dbModel m)
+        public string consultDB(DBModel m)
         {
             conexion = new MongoConnect(m.port, m.server);
             try
@@ -86,7 +86,7 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string createTable(dbModel m, string table_name, List<column> cll)
+        internal string createTable(DBModel m, string table_name, List<Column> cll)
         {
             conexion = new MongoConnect(m.port, m.server);
             try
@@ -105,7 +105,27 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string deleteTable(dbModel model, string table_name)
+        internal string deleteTable(DBModel model, string table_name)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string multipleQuery(DBModel model, object cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string updateValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string deleteValuesTable(DBModel model, string table_name, List<Value> cll)
         {
             throw new NotImplementedException();
         }

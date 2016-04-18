@@ -5,16 +5,16 @@ using System.Web;
 
 namespace ServicioWEB.Modelo
 {
-    public class database
+    public class Database
     {
 
         public int idC { get; set; }
 
         public string db_name { get; set; }
        
-        public database() { }
+        public Database() { }
 
-        public database(int idC , string db_name)
+        public Database(int idC , string db_name)
         {
             this.db_name = db_name;
             this.idC = idC;

@@ -159,6 +159,7 @@ namespace ServicioWEB
             }
         }
 
+        //Obtiene todas las conexiones del servidor de metadata.
         public string getConecctions()
         {
 
@@ -166,6 +167,8 @@ namespace ServicioWEB
               return b;
             //return "Connected";
         }
+
+        //Verifica si se puede abrir una conexion especifica
 
         public string checkConnection(int connectionID) 
         {
@@ -241,7 +244,7 @@ namespace ServicioWEB
 
         public string updateValuesTable(string jsonUVT)
         {
-            IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonUVT);
+            UVTable table = JsonConvert.DeserializeObject<UVTable>(jsonUVT);
             int idC = table.cID;
             string valores = table.values;
             var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);
@@ -266,7 +269,7 @@ namespace ServicioWEB
 
         public string deleteValuesTable(string jsonDVT)
         {
-            IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonDVT);
+            DVTable table = JsonConvert.DeserializeObject<DVTable>(jsonDVT);
             int idC = table.cID;
             string valores = table.values;
             var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);

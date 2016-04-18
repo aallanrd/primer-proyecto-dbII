@@ -7,19 +7,19 @@ namespace ServicioWEB.Modelo
 {
    
 
-    public class column
+    public class Column
     {
         public string name { get; set; }
         public string type { get; set; }
 
         public int length { get; set; }
 
-        public column()
+        public Column()
         {
 
         }
 
-        public column(string name, string type, int length)
+        public Column(string name, string type, int length)
         {
             this.name = name;
             this.type = type;

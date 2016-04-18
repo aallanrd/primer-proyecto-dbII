@@ -5,16 +5,16 @@ using System.Web;
 
 namespace ServicioWEB.Modelo
 {
-    public class deleteTable
+    public class DTable
     {
         public int cID { get; set; }
 
         public string table_name { get; set; }
 
 
-        public deleteTable() { }
+        public DTable() { }
 
-        public deleteTable(int cID, string nombre)
+        public DTable(int cID, string nombre)
         {
             this.cID = cID;
             this.table_name = nombre;
