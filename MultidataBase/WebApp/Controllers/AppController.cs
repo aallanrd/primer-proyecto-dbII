@@ -172,6 +172,7 @@ namespace WebApp.Controllers
 
         public ActionResult IncluirDB()         { return View(); }
 
+        public ActionResult Querys()        { return View(); }
 
         public ActionResult VerConexiones()
         {

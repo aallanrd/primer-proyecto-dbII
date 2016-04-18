@@ -28,7 +28,7 @@ namespace ServicioWEB
             */
 
             // Deserializamos el JSOn en un modelo de base de datos
-            dbModel model = JsonConvert.DeserializeObject<dbModel>(jsonIDB);
+            DBModel model = JsonConvert.DeserializeObject<DBModel>(jsonIDB);
 
             switch (model.dbType)
             {
@@ -78,10 +78,10 @@ namespace ServicioWEB
            // string json = "{ 'cID': '1', 'db_name':'MiDB' }";
 
             //Deserializa el JSOn
-            database db = JsonConvert.DeserializeObject<database>(jsonCDB);
+            Database db = JsonConvert.DeserializeObject<Database>(jsonCDB);
 
             //Obtiene la conexión correspondiente
-            dbModel  m  =  controlMaria.getConnection(db.idC);
+            DBModel  m  =  controlMaria.getConnection(db.idC);
 
             //String db_type,String db_name
             switch (m.dbType)
@@ -104,12 +104,15 @@ namespace ServicioWEB
             //int iC, string name, ArrayList columnas
             // string json = "{ 'cID': 'idConexion', 'table_name':'TableName', columnas:	
             //[{ alias:	“alias”, nombre:“nombre”,tipo:  “tipo”, null:	true / false },...]}";
-            table table = JsonConvert.DeserializeObject<table>(jsonCT);
+
+            // Tabla por alias a cada base de datos?
+
+            Table table = JsonConvert.DeserializeObject<Table>(jsonCT);
             int idC = table.cID;
             string columnas = table.columnas;   
-            var cll = JsonConvert.DeserializeObject<List<Modelo.column>>(columnas);
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Column>>(columnas);
 
-            dbModel model = controlMaria.getConnection(idC);
+            DBModel model = controlMaria.getConnection(idC);
             if (model != null)
             {
                 switch (model.dbType)
@@ -135,10 +138,10 @@ namespace ServicioWEB
             //int iC, string name, ArrayList columnas
             // string json = "{ 'cID': 'idConexion', 'table_name':'TableName', columnas:	
             //[{ alias:	“alias”, nombre:“nombre”,tipo:  “tipo”, null:	true / false },...]}";
-            deleteTable table = JsonConvert.DeserializeObject<deleteTable>(jsonDT);
+            DTable table = JsonConvert.DeserializeObject<DTable>(jsonDT);
             int idC = table.cID;
  
-            dbModel model = controlMaria.getConnection(idC);
+            DBModel model = controlMaria.getConnection(idC);
             if (model != null)
             {
                 switch (model.dbType)
@@ -164,18 +167,15 @@ namespace ServicioWEB
             //return "Connected";
         }
 
-       
-     
-
         public string checkConnection(int connectionID) 
         {
-            dbModel model =  controlMaria.getConnection(connectionID);
+            DBModel model =  controlMaria.getConnection(connectionID);
             if (model != null)
             {
                 switch (model.dbType)
                 {
                     case "MariaDB": return controlMaria.check(model);
-                    //case "MongoDB": return controlMongo.check(model);
+                    case "MongoDB": return controlMongo.check(model);
                     case "SQLDB": return controlSQL.check(model);
                     default: return "Cant Check";
                 }
@@ -188,27 +188,105 @@ namespace ServicioWEB
            
         }
 
-      
 
-
+        //Ejecuta todas las querys que vengan por parámetro en el JSON
         public string multipleQuery(string jsonMQ)
         {
-            throw new NotImplementedException();
+            Querys querys = JsonConvert.DeserializeObject<Querys>(jsonMQ);
+            int idC = querys.cID;
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Query>>(querys.values);
+            DBModel model = controlMaria.getConnection(idC);
+
+            if (model != null)
+            {
+                switch (model.dbType)
+                {
+                    case "MariaDB": return controlMaria.multipleQuery(model, cll);
+                    case "MongoDB": return controlMongo.multipleQuery(model, cll);
+                    case "SQLDB": return controlSQL.multipleQuery(model, cll);
+                    default: return "Cant Check";
+                }
+
+            }
+            else
+            {
+                return "Not checked";
+            }
         }
 
         public string insertValuesTable(string jsonIVT)
         {
-            throw new NotImplementedException();
+            IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonIVT);
+            int idC = table.cID;
+            string valores = table.values;
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);
+
+            DBModel model = controlMaria.getConnection(idC);
+            if (model != null)
+            {
+                switch (model.dbType)
+                {
+                    case "MariaDB": return controlMaria.insertValuesTable(model, table.table_name, cll);
+                    case "MongoDB": return controlMongo.insertValuesTable(model, table.table_name, cll);
+                    case "SQLDB": return controlSQL.insertValuesTable(model, table.table_name, cll);
+                    default: return "Cant Check";
+                }
+
+            }
+            else
+            {
+                return "Not checked";
+            }
         }
 
         public string updateValuesTable(string jsonUVT)
         {
-            throw new NotImplementedException();
+            IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonUVT);
+            int idC = table.cID;
+            string valores = table.values;
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);
+
+            DBModel model = controlMaria.getConnection(idC);
+            if (model != null)
+            {
+                switch (model.dbType)
+                {
+                    case "MariaDB": return controlMaria.updateValuesTable(model, table.table_name, cll);
+                    case "MongoDB": return controlMongo.updateValuesTable(model, table.table_name, cll);
+                    case "SQLDB": return controlSQL.updateValuesTable(model, table.table_name, cll);
+                    default: return "Cant Check";
+                }
+
+            }
+            else
+            {
+                return "Not checked";
+            }
         }
 
-        public string deleteValuesTable(string jsonUVT)
+        public string deleteValuesTable(string jsonDVT)
         {
-            throw new NotImplementedException();
+            IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonDVT);
+            int idC = table.cID;
+            string valores = table.values;
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);
+
+            DBModel model = controlMaria.getConnection(idC);
+            if (model != null)
+            {
+                switch (model.dbType)
+                {
+                    case "MariaDB": return controlMaria.deleteValuesTable(model, table.table_name, cll);
+                    case "MongoDB": return controlMongo.deleteValuesTable(model, table.table_name, cll);
+                    case "SQLDB": return controlSQL.deleteValuesTable(model, table.table_name, cll);
+                    default: return "Cant Check";
+                }
+
+            }
+            else
+            {
+                return "Not checked";
+            }
         }
     }
 }

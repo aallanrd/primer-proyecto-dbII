@@ -19,7 +19,7 @@ namespace ServicioWEB.Controladores
 
 
         //Inserta en la base de datos de metadata una nueva conexión. 
-        public string includeDB(dbModel m)
+        public string includeDB(DBModel m)
         {
             if (conexion.OpenConnection().Equals("Connected"))
             {
@@ -104,7 +104,7 @@ namespace ServicioWEB.Controladores
         }
 
         //Crear una nueva Base de Datos en una instancia seleccionada 
-        public string createDB(dbModel m, string database_name)
+        public string createDB(DBModel m, string database_name)
         {
             MariaDBConnect newConnection = new MariaDBConnect(m.username, m.pass, m.server, m.port, m.alias);
             if (newConnection.OpenConnection().Equals("Connected"))
@@ -131,7 +131,7 @@ namespace ServicioWEB.Controladores
         }
 
         //Crear una nueva tabla en una instancia de MariaDB
-        public string createTable(dbModel db, string table_name, List<Modelo.column> array)
+        public string createTable(DBModel db, string table_name, List<Modelo.Column> array)
         {
 
             MariaDBConnect newConnection = new MariaDBConnect(db.username,db.pass,db.server,db.port,db.alias);
@@ -178,7 +178,7 @@ namespace ServicioWEB.Controladores
         }
 
         //Crear una nueva tabla en una instancia de MariaDB
-        public string deleteTable(dbModel db, string table_name)
+        public string deleteTable(DBModel db, string table_name)
         {
 
             MariaDBConnect newConnection = new MariaDBConnect(db.username, db.pass, db.server, db.port, db.alias);
@@ -208,9 +208,14 @@ namespace ServicioWEB.Controladores
 
         }
 
+        internal string multipleQuery(DBModel model, List<Modelo.Query> querys )
+        {
+            throw new NotImplementedException();
+        }
+
 
         //Obtener una conexión específica por Identificador de Conexión.
-        public dbModel getConnection(int cID)
+        public DBModel getConnection(int cID)
         {
             if (conexion.OpenConnection().Equals("Connected"))
             {
@@ -224,7 +229,7 @@ namespace ServicioWEB.Controladores
                 try
                 {
                     MySqlDataReader rdr = cmd.ExecuteReader();
-                    dbModel model = null;
+                    DBModel model = null;
                     while (rdr.Read())
                     {
                         int z = rdr.GetInt32(7);
@@ -238,7 +243,7 @@ namespace ServicioWEB.Controladores
                             int port = rdr.GetInt32(5);
                             string allias = rdr.GetString(6);
                             string id = rdr.GetString(7);
-                            model = new dbModel(
+                            model = new DBModel(
                                 db_type, usr, pass, server, protocol, port, allias);
                             return model;
                         }
@@ -261,8 +266,18 @@ namespace ServicioWEB.Controladores
             }
         }
 
+        internal string updateValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
         //Chequear que existe una conexion posible de mariaDB con el modelo del parámetro.
-        public string check(dbModel model)
+        public string check(DBModel model)
         {
 
             MariaDBConnect cc = new MariaDBConnect(model.username, model.pass, model.server, model.port, model.alias);
@@ -278,6 +293,10 @@ namespace ServicioWEB.Controladores
 
         }
 
+        internal string deleteValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

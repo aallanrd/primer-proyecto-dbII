@@ -92,9 +92,9 @@ por medio de JSON, las cuales se pueden llamar creando un cliente del servicio d
 
 ##### /updateValuesTable
 
-##### /updateValuesTable
+##### /deleteValuesTable
 
-##### /getConecctions
+##### /getConnections
 
 ##### /multipleQuery
 

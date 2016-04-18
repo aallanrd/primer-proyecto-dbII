@@ -2,13 +2,56 @@
     <h3>MultiDataBase / Insertar nueva tabla</h3>
     <h4>Uso de función del API (/insertTable)</h4>
 </div>
-<div class="container" ng-controller="multiController">
-    <a href="../App" type="button" class="btn btn-danger btn-lg pull-left">
-        <i class="fa fa-arrow-left"></i>Volver
-    </a>
-      <hr />
-    
-        
+<div class="row " ng-controller="multiController">
+    <br /><br />
+    <hr />
+
+    <div class="col-lg-12 text-center">
+        <form ng-submit="insertTable()">
+
+            <h2>Configuración </h2>
+            <input placeholder="Id Conección" class="input-lg" type="number" name="cID" ng-model="cID" />
+            <input placeholder="Table Name" class="input-lg" ng-model="name" />
+            <button type="submit" class="btn btn-warning btn-lg"> Insertar en Tabla</button>
+
+        </form>
+    </div>
+    <div class="col-lg-12 text-center">
+        <form ng-submit="addValue()">
+
+            <h2>Valores</h2>
+
+            <div class="col-md-12">
+                <input placeholder="Columna" class="input-lg" ng-model="Vcol" />
+                <input placeholder="Valor" class="input-lg" ng-model="Vval" />
+            
+
+                <button class="btn btn-primary" type="submit"> <i class="fa fa-arrow-rigth"> </i> Añadir</button>
+
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 ">
+
+                <hr />
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="val in valores">
+                        {{val.Vcol}}
+                        <span class="badge pull-right">{{val.Vval}}</span>
+                     
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+    <hr /><br /> <br />
+
 </div>
     
 

@@ -4,18 +4,23 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
     
     $scope.todas = [];
+    $scope.valores = [];
+
     
     $scope.addColumn = function () {
         $scope.todas.push({ name: $scope.Cname, type: $scope.Ctype, length: $scope.Clength });
   
     };
 
+    $scope.addValue = function () {
+        $scope.valores.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
+
+    };
+
   
     $scope.createTable = function ()     {
 
-        
-       
-    
+
         var json = JSON.stringify($scope.todas);
 
         $http.post('../App/HttpCreateTable?cID=' + $scope.cID + '&name=' + $scope.name + '&columns=' + json,
@@ -82,7 +87,24 @@ multiDBApp.controller('multiController', function ($scope,$http) {
         });
 
     }
-      
+    $scope.insertTable = function () {
+
+
+        var json = JSON.stringify($scope.valores);
+
+        $http.post('../App/HttpInsertValueTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
+            '&values=' + json,
+            { data: {} })
+        .success(function (data, status, headers, config) {
+            alert("Listo! Parece que todo salió bien");
+        })
+        .error(function (data, status, headers, config) {
+            alert("Ups! Hubo un error en la solicitud REST");
+
+        });
+
+    }
+
 }).config(function ($httpProvider) {
     $httpProvider.defaults.headers.post = {};
     $httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
