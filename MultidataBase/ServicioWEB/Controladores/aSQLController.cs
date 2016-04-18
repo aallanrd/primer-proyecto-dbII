@@ -47,7 +47,7 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        public string createDB(dbModel db,string database_name)
+        public string createDB(DBModel db,string database_name)
         {
             conexion = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
             if (conexion.OpenConnection().Equals("Connected"))
@@ -76,7 +76,7 @@ namespace ServicioWEB.Controladores
 
         }
 
-        internal string check(dbModel model)
+        internal string check(DBModel model)
         {
             SQLConnect conexion = new SQLConnect(model.username, model.pass, model.server, model.port, model.alias);
             try
@@ -97,7 +97,7 @@ namespace ServicioWEB.Controladores
         }
 
         //Crear una nueva tabla en una instancia de MariaDB
-        public string createTable(dbModel db, string table_name, List<Modelo.column> array)
+        public string createTable(DBModel db, string table_name, List<Modelo.Column> array)
         {
 
             SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
@@ -150,7 +150,27 @@ namespace ServicioWEB.Controladores
 
         }
 
-        internal string deleteTable(dbModel model, string table_name)
+        internal string deleteTable(DBModel model, string table_name)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string multipleQuery(DBModel model, object cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string updateValuesTable(DBModel model, string table_name, List<Value> cll)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string deleteValuesTable(DBModel model, string table_name, List<Value> cll)
         {
             throw new NotImplementedException();
         }
