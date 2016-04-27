@@ -211,6 +211,7 @@
     <Compile Include="Models\DatabaseVM.cs" />
     <Compile Include="Models\IncludeDbVm.cs" />
     <Compile Include="Models\DeleteFromTable.cs" />
+    <Compile Include="Models\QueryVM.cs" />
     <Compile Include="Models\UpdateTableVM.cs" />
     <Compile Include="Models\DeleteTableVM.cs" />
     <Compile Include="Models\InsertTableVM.cs" />

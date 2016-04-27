@@ -197,14 +197,14 @@ namespace ServicioWEB
         {
             Querys querys = JsonConvert.DeserializeObject<Querys>(jsonMQ);
             int idC = querys.cID;
-            var cll = JsonConvert.DeserializeObject<List<Modelo.Query>>(querys.values);
+            var cll = JsonConvert.DeserializeObject<List<Modelo.Query>>(querys.querys);
             DBModel model = controlMaria.getConnection(idC);
 
             if (model != null)
             {
                 switch (model.dbType)
                 {
-                    case "MariaDB": return controlMaria.multipleQuery(model, cll);
+                    case "MariaDB": return controlMaria.multipleQuery(model, querys, cll);
                     case "MongoDB": return controlMongo.multipleQuery(model, cll);
                     case "SQLDB": return controlSQL.multipleQuery(model, cll);
                     default: return "Cant Check";

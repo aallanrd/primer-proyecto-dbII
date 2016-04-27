@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServicioWEB.Modelo
+namespace WebApp.Models
 {
-    public class Querys
+    public class QueryVM
     {
         public int cID { get; set; }
 
@@ -15,9 +15,9 @@ namespace ServicioWEB.Modelo
 
         public string join_on { get; set; }
 
-        public Querys() { }
+        public QueryVM() { }
 
-        public Querys(int cID, string order_by, string join_on, string querys)
+        public QueryVM(int cID, string order_by ,string join_on, string querys)
         {
             this.cID = cID;
             this.order_by = order_by;

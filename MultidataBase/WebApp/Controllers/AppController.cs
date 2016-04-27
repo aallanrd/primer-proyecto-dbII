@@ -138,6 +138,21 @@ namespace WebApp.Controllers
             return new JsonResult { Data = x };
 
         }
+        /* 7.   /deleteValuesTable(https://github.com/aallanrd/primer-proyecto-dbII#deleteTable)
+         @Http Call from View to Call Service API Function : client.deleteTable(JSON)
+         @Params(int cID, string table_name)
+         @Return JSON 
+         */
+        [HttpPost]
+        public JsonResult HttpQuery
+            (int cID, string order_by, string join_on, string querys)
+        {
+            QueryVM qq = new QueryVM(cID, order_by, join_on, querys);
+            var jsonQ = JsonConvert.SerializeObject(qq);
+            string x = client.multipleQuery(jsonQ);
+            return new JsonResult { Data = x };
+
+        }
 
         /*
  8.   /getConnections (https://github.com/aallanrd/primer-proyecto-dbII#getConnections)

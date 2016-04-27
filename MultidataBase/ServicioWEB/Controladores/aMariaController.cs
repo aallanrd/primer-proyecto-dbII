@@ -208,10 +208,87 @@ namespace ServicioWEB.Controladores
 
         }
 
-        internal string multipleQuery(DBModel model, List<Modelo.Query> querys )
+        //Obtiene la consulta segun parámetros
+        internal string multipleQuery(DBModel db, Querys q , List<Modelo.Query> array)
         {
-            throw new NotImplementedException();
-        }
+            MariaDBConnect newConnection = new MariaDBConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+                   
+                    string colums = "( ";
+                    string joins = " ";
+                    int c = 0;
+
+                    // Generando el query de consulta
+                    while (c != array.Count)
+                    {
+                        Query x = array[c];
+                        colums = colums + x._cName;
+                        if (array.Count == 1) { joins = joins + x._table;}
+                        else { joins = joins + x._table + " Inner Join on";  } 
+                        if (c + 1 == array.Count){break;}
+                        else{colums = colums + ","; }
+                        c++;
+                    }
+                    colums = colums + ")";
+                    string Query = "select " + colums + " from "  + joins  + " order by " + q.order_by ;
+
+                    MySqlCommand cmd = new MySqlCommand(Query, newConnection.connection);
+
+                    try
+                    {
+                        ArrayList objs = new ArrayList();
+                        MySqlDataReader rdr = cmd.ExecuteReader();
+                        string getting = "{";
+                        while (rdr.Read())
+                        {
+                                int cc = 0; 
+                                while(cc!= array.Count)
+                                {
+                                   
+                                    if ( (cc + 1) == array.Count)
+                                    {
+                                        getting = getting + " 'value' : '" + rdr.GetString(cc);
+                                    }
+                                    else
+                                    {
+                                        getting = getting + " 'value' : '" + rdr.GetString(cc) + ",";
+                                    }
+                                        cc++;
+                                    }
+
+                                 }
+                        getting = getting + "}";
+
+                        rdr.Close();
+                        conexion.CloseConnection();
+                        // -- Serializa todos los objetos obtenidos de la base a JSON.
+                        var json = JsonConvert.SerializeObject(objs, Formatting.Indented);
+                        return json;
+
+                    }
+                    catch (Exception e)
+                    {
+                        return "{ 'error': '" + e + "'}";
+                    }
+
+
+
+                   
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error insertando'}";
+                }
+            }
+
+            else
+            {
+                return "Error conectando a la BD";
+            }
+            }
 
 
         //Obtener una conexión específica por Identificador de Conexión.

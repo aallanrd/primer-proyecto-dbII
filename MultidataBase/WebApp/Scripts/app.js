@@ -4,37 +4,38 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
     
     $scope.todas = [];
-    $scope.valores = [];
-
+    $scope.valoresI = [];
+    $scope.valoresU = [];
+    $scope.valoresD = [];
+    $scope.Querys = [];
     
     $scope.addColumn = function () {
         $scope.todas.push({ name: $scope.Cname, type: $scope.Ctype, length: $scope.Clength });
   
     };
 
-    $scope.addValue = function () {
-        $scope.valores.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
+    $scope.addValueI = function () {
+        $scope.valoresI.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
 
     };
 
+
+    $scope.addValueU = function () {
+        $scope.valoresU.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
+
+    };
+
+    $scope.addValueD = function () {
+        $scope.valoresD.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
+
+    };
   
-    $scope.createTable = function ()     {
+    $scope.addQuery = function () {
+        $scope.Querys.push({ _cName: $scope._cName, _table: $scope._table });
 
+    };
 
-        var json = JSON.stringify($scope.todas);
-
-        $http.post('../App/HttpCreateTable?cID=' + $scope.cID + '&name=' + $scope.name + '&columns=' + json,
-            { data: {} })
-        .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
-        })
-        .error(function (data, status, headers, config) {
-            alert("Ups! Hubo un error en la solicitud REST");
-            
-        });
-       
-    }
-    $scope.includeDB = function ()      {
+    $scope.includeDB = function () {
 
         shuffle_b(false);
 
@@ -43,11 +44,11 @@ multiDBApp.controller('multiController', function ($scope,$http) {
             + '&port=' + $scope.port + '&alias=' + $scope.alias,
             { data: {} })
         .success(function (data, status, headers, config) {
-         
+
             shuffle_b(true);
             alert(data);
-            
-           
+
+
         })
         .error(function (data, status, headers, config) {
             shuffle_b(true);
@@ -55,9 +56,9 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
         });
 
-        
 
-       
+
+
     }
     $scope.createDB = function () {
 
@@ -72,6 +73,22 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
         });
     }
+    $scope.createTable = function () {
+
+
+        var json = JSON.stringify($scope.todas);
+
+        $http.post('../App/HttpCreateTable?cID=' + $scope.cID + '&name=' + $scope.name + '&columns=' + json,
+            { data: {} })
+        .success(function (data, status, headers, config) {
+            alert("Listo! Parece que todo salió bien");
+        })
+        .error(function (data, status, headers, config) {
+            alert("Ups! Hubo un error en la solicitud REST");
+            
+        });
+       
+    }     
     $scope.deleteTable = function () {
 
         var json = JSON.stringify($scope.todas);
@@ -102,43 +119,63 @@ multiDBApp.controller('multiController', function ($scope,$http) {
             alert("Ups! Hubo un error en la solicitud REST");
 
         });
-
     }
-
     $scope.updateValuesTable = function () {
 
 
-        var json = JSON.stringify($scope.valores);
+            var json = JSON.stringify($scope.valores);
 
-        $http.post('../App/HttpUpdateValuesTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
-            '&values=' + json,
-            { data: {} })
-        .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
-        })
-        .error(function (data, status, headers, config) {
-            alert("Ups! Hubo un error en la solicitud REST");
+            $http.post('../App/HttpUpdateValuesTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
+                '&values=' + json,
+                { data: {} })
+            .success(function (data, status, headers, config) {
+                alert("Listo! Parece que todo salió bien");
+            })
+            .error(function (data, status, headers, config) {
+                alert("Ups! Hubo un error en la solicitud REST");
 
-        });
+            });
 
-    }
+        };
     $scope.deleteValuesTable = function () {
 
 
-        var json = JSON.stringify($scope.valores);
+            var json = JSON.stringify($scope.valores);
 
-        $http.post('../App/HttpDeleteValuesTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
-            '&values=' + json,
-            { data: {} })
-        .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
-        })
-        .error(function (data, status, headers, config) {
-            alert("Ups! Hubo un error en la solicitud REST");
+            $http.post('../App/HttpDeleteValuesTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
+                '&values=' + json,
+                { data: {} })
+            .success(function (data, status, headers, config) {
+                alert("Listo! Parece que todo salió bien");
+            })
+            .error(function (data, status, headers, config) {
+                alert("Ups! Hubo un error en la solicitud REST");
 
-        });
+            });
+    };
+    $scope.queryAll = function () {
 
-    }
+
+            var json = JSON.stringify($scope.Querys);
+
+        $http.post('../App/HttpQuery?cID=' + $scope.cID +
+            '&querys=' + json + '&order_by=' + $scope.order_by + '&join_on=' + $scope.join_on,
+               
+                { data: {} })
+            .success(function (data, status, headers, config) {
+                alert(data);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Ups! Hubo un error en la solicitud REST");
+
+            });
+
+        };
+
+    
+
+
+
 
 
 }).config(function ($httpProvider) {

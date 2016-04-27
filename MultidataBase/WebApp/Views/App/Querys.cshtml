@@ -1,8 +1,67 @@
 ﻿<div class="">
     <h3>MultiDataBase / Multiple Query</h3>
     <h4>Uso de función del API (/multipleQuery)</h4>
+    <a href="../App" type="button" class="btn btn-danger btn-lg pull-left">
+        <i class="fa fa-arrow-left"></i>Volver
+    </a>
 </div>
 <div class="row">
-    
-    
+
+    <div class="row " ng-controller="multiController">
+        <br /><br />
+        <hr />
+
+
+        <div class="col-lg-12 text-center">
+            <form ng-submit="addQuery()">
+
+                <h2>Querys</h2>
+
+                <div class="col-md-12">
+                    <input placeholder="Columna" class="input-lg" ng-model="_cName" />
+                    <input placeholder="Tabla (add As)" class="input-lg" ng-model="_table" />
+
+                    <button class="btn btn-primary" type="submit"> <i class="fa fa-arrow-rigth"> </i> Añadir</button>
+
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 ">
+
+                    <hr />
+                    <div >
+                        Select <span 
+                                     ng-repeat="query in Querys">
+                           {{query._cName}} 
+                        </span>
+                        From
+                        <span c ng-repeat="query in Querys">
+                            {{query._table}}
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </form>
+
+
+
+        </div>
+        <div class="col-lg-12 text-center">
+            <form ng-submit="queryAll()">
+                <hr />
+                <h2>Configuración </h2>
+                <input placeholder="Id Conección" class="input-lg" type="number" ng-model="cID" />
+                <br /><br />
+                <input placeholder="Order by" class="input-lg" ng-model="order_by" />
+                <input placeholder="Join On" class="input-lg" ng-model="join_on" />
+                <hr />
+                <button type="submit" class="btn btn-warning btn-lg"> Consultar </button>
+
+            </form>
+        </div>
+        <hr /><br /> <br />
+
+    </div>
+
 </div>
