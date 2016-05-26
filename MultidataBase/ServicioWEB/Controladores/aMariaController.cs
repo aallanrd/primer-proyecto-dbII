@@ -15,7 +15,7 @@ namespace ServicioWEB.Controladores
     {
 
         // Instancia Fija para Metadata
-        MariaDBConnect conexion = new MariaDBConnect("root", "Ard2592allan", "localhost", 3306, "metadatadb");
+        MariaDBConnect conexion = new MariaDBConnect("root", "Ard@2592", "localhost", 3306, "metadatadb");
 
 
         //Inserta en la base de datos de metadata una nueva conexión. 

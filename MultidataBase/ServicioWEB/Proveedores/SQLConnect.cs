@@ -20,8 +20,9 @@ namespace ServicioWEB
 
         public void Initialize(string uid, string pass, string server, int port, string database)
         {
+            //Puede incluir cualquier atributo en la cadena de conexión. 
 
-            connection = new SqlConnection("Server="+server+";Database="+database+";Integrated Security=True ");
+            connection = new SqlConnection("Server="+server+";Database="+database+";Integrated Security=True");
 
 
         }

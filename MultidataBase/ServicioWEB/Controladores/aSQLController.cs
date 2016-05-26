@@ -16,8 +16,13 @@ namespace ServicioWEB.Controladores
 
         public aSQLController()
         {
-            
+            conexion = new SQLConnect("root", "Ard2592allan", "DESKTOP-GH4HJ56", 1433, "master");
         }
+        public aSQLController(string uid, string pass, string server, int port, string database)
+        {
+            conexion = new SQLConnect(uid, pass, server, port, database);
+        }
+
 
         public string consultDB()
         {
@@ -26,11 +31,11 @@ namespace ServicioWEB.Controladores
 
                 try
                 {
-                    // mariaDB.Insert(db);
-                 //   string Query = "select * from  metadatadb.servidores";
 
-                   // SqlCommand cmd = new SqlCommand(Query);
-                   // cmd.ExecuteNonQuery();
+                    string Query = "SELECT name, database_id, create_date FROM sys.databases";
+
+                    SqlCommand cmd = new SqlCommand(Query);
+                    cmd.ExecuteNonQuery();
 
                     //conexion.CloseConnection();
                     return "Correcto SQL";
@@ -54,7 +59,7 @@ namespace ServicioWEB.Controladores
             {
                 try
                 {
-                    string Query = "CREATE DATABASE " + database_name + "";
+                    string Query = "CREATE DATABASE " + database_name + ";";
 
                     SqlCommand cmd = new SqlCommand(Query,conexion.connection);
 
@@ -76,7 +81,7 @@ namespace ServicioWEB.Controladores
 
         }
 
-        internal string check(DBModel model)
+        public string check(DBModel model)
         {
             SQLConnect conexion = new SQLConnect(model.username, model.pass, model.server, model.port, model.alias);
             try
@@ -129,7 +134,7 @@ namespace ServicioWEB.Controladores
                         c++;
                     }
                     colums = colums + ")";
-                    string Query = "create table " + table_name + colums;
+                    string Query = "create table dbo." + table_name + colums;
 
                     SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
 
@@ -150,9 +155,32 @@ namespace ServicioWEB.Controladores
 
         }
 
-        internal string deleteTable(DBModel model, string table_name)
+        public string deleteTable(DBModel db, string database_name)
         {
-            throw new NotImplementedException();
+            conexion = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (conexion.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+                    string Query = "DROP DATABASE dbo." + database_name + "";
+
+                    SqlCommand cmd = new SqlCommand(Query, conexion.connection);
+
+                    cmd.ExecuteNonQuery();
+                    //conexion.CloseConnection();
+                    return "Insertada correctamente";
+                }
+                catch (Exception e)
+                {
+                    return "Error borrando la base de datos" + e;
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
         }
 
         internal string multipleQuery(DBModel model, object cll)
@@ -160,19 +188,113 @@ namespace ServicioWEB.Controladores
             throw new NotImplementedException();
         }
 
-        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        public string insertValuesTable(DBModel db, string table_name, List<Value> cll)
         {
-            throw new NotImplementedException();
+            SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+                    string colums = "( ";
+                    int c = 0;
+                   
+                    while (c != cll.Count)
+                    {
+                        var x = cll[c];
+                        string Query = "INSERT dbo." + table_name +"VALUES"+ colums+cll;
+                        SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
+                        cmd.ExecuteNonQuery();
+
+                        if (c + 1 == cll.Count)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            colums = colums + ",";
+                        }
+                        c++;
+                    }
+                    colums = colums + ")";
+                   
+                   
+                    return "{ 'msg':  'Insertada correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error insertando'}";
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
+
         }
 
-        internal string updateValuesTable(DBModel model, string table_name, List<Value> cll)
+        //ojo el parametro condicion no es un parametro preestablecido haz una clase para condicion "esto es lo que el usuario escribe para que modifique con una condicion respectiva"
+        //falta la interfaz en el html
+        public string updateValuesTable(DBModel db, string table_name, List<Value> cll)
         {
-            throw new NotImplementedException();
+            SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                //actualiza solo un valor no esta implementado en la interfaz para que lo implemente con uno
+                try
+                {
+                   
+                        string Query = "update table dbo." + table_name +"SET" +cll+ "="+ cll  +"WHERE" +cll +"="+cll ;
+                        SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
+                        cmd.ExecuteNonQuery();
+
+       
+
+
+                    return "{ 'msg':  'Modificado correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error insertando'}";
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
         }
 
-        internal string deleteValuesTable(DBModel model, string table_name, List<Value> cll)
+        public string deleteValuesTable(DBModel db, string table_name, List<Value> cll)
         {
-            throw new NotImplementedException();
+            SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+                        //elimina solo un registro por valor dentro de una tabla   
+                        string Query = "delete from" +"table dbo."+"where"+cll+"="+cll;
+                        SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
+                        cmd.ExecuteNonQuery();
+
+                  
+
+
+                    return "{ 'msg':  'Insertada correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error insertando'}";
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
         }
     }
 }
