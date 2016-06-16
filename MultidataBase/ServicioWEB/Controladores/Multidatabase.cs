@@ -206,7 +206,7 @@ namespace ServicioWEB
                 {
                     case "MariaDB": return controlMaria.multipleQuery(model, querys, cll);
                     case "MongoDB": return controlMongo.multipleQuery(model, cll);
-                    case "SQLDB": return controlSQL.multipleQuery(model, cll);
+                    case "SQLDB": return controlSQL.multipleQuery(model, querys, cll);
                     default: return "Cant Check";
                 }
 

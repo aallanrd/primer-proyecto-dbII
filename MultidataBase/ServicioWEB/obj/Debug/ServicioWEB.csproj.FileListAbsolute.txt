@@ -99,3 +99,6 @@ D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\bin\System.Web.WebPages.
 D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.csprojResolveAssemblyReference.cache
 D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.dll
 D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\obj\Debug\ServicioWEB.pdb
+D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\bin\MySql.Data.dll
+D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\bin\MySql.Data.Entity.EF5.dll
+D:\Sites\primer-proyecto-dbII\MultidataBase\ServicioWEB\bin\MySql.Web.dll

@@ -1,5 +1,7 @@
-﻿using ServicioWEB.Modelo;
+﻿using Newtonsoft.Json;
+using ServicioWEB.Modelo;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -155,24 +157,24 @@ namespace ServicioWEB.Controladores
 
         }
 
-        public string deleteTable(DBModel db, string database_name)
+        public string deleteTable(DBModel db, string table_name)
         {
             conexion = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
             if (conexion.OpenConnection().Equals("Connected"))
             {
                 try
                 {
-                    string Query = "DROP DATABASE dbo." + database_name + "";
+                    string Query = "DROP Table dbo." + table_name + "";
 
                     SqlCommand cmd = new SqlCommand(Query, conexion.connection);
 
                     cmd.ExecuteNonQuery();
                     //conexion.CloseConnection();
-                    return "Insertada correctamente";
+                    return "Eliminada correctamente";
                 }
                 catch (Exception e)
                 {
-                    return "Error borrando la base de datos" + e;
+                    return "Error borrando la tabla" + e;
                 }
 
 
@@ -183,9 +185,85 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string multipleQuery(DBModel model, object cll)
+        public string multipleQuery(DBModel db,  Querys q, List<Modelo.Query> array)
         {
-            throw new NotImplementedException();
+            SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (newConnection.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+
+                    string colums = "( ";
+                    string joins = " ";
+                    int c = 0;
+
+                    // Generando el query de consulta
+                    while (c != array.Count)
+                    {
+                        Query x = array[c];
+                        colums = colums + x._cName;
+                        if (array.Count == 1) { joins = joins + x._table; }
+                        else { joins = joins + x._table + " Inner Join on"; }
+                        if (c + 1 == array.Count) { break; }
+                        else { colums = colums + ","; }
+                        c++;
+                    }
+                    colums = colums + ")";
+                    string Query = "select " + colums + " from " + joins + " order by " + q.order_by;
+
+                    SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
+
+                    try
+                    {
+                        ArrayList objs = new ArrayList();
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        string getting = "{";
+                        while (rdr.Read())
+                        {
+                            int cc = 0;
+                            while (cc != array.Count)
+                            {
+
+                                if ((cc + 1) == array.Count)
+                                {
+                                    getting = getting + " 'value' : '" + rdr.GetString(cc);
+                                }
+                                else
+                                {
+                                    getting = getting + " 'value' : '" + rdr.GetString(cc) + ",";
+                                }
+                                cc++;
+                            }
+
+                        }
+                        getting = getting + "}";
+
+                        rdr.Close();
+                        conexion.CloseConnection();
+                        // -- Serializa todos los objetos obtenidos de la base a JSON.
+                        var json = JsonConvert.SerializeObject(objs, Formatting.Indented);
+                        return json;
+
+                    }
+                    catch (Exception e)
+                    {
+                        return "{ 'error': '" + e + "'}";
+                    }
+
+
+
+
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error consultando'}";
+                }
+            }
+
+            else
+            {
+                return "Error conectando a la BD";
+            }
         }
 
         public string insertValuesTable(DBModel db, string table_name, List<Value> cll)
@@ -279,10 +357,7 @@ namespace ServicioWEB.Controladores
                         SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
                         cmd.ExecuteNonQuery();
 
-                  
-
-
-                    return "{ 'msg':  'Insertada correctamente'}";
+                    return "{ 'msg':  'Eliminado correctamente'}";
                 }
                 catch (Exception e)
                 {

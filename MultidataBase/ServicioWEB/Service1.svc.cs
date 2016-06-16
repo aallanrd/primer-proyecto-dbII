@@ -16,6 +16,7 @@ namespace ServicioWEB
      
     public class Service1 : IService1
     {
+        //Interface de comunicación con la capa logica del servicio
         InterfaceDB dbx = new Multidatabase();
 
         public string includeDB(String jsonIDB)
