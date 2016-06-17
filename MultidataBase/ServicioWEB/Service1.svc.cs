@@ -79,5 +79,11 @@ namespace ServicioWEB
             string connections = dbx.getConecctions();
             return connections;
         }
+
+        public string deleteFromServer(int id)
+        {
+            string delete = dbx.deleteFromServer(id);
+            return delete;
+        }
     }
 }

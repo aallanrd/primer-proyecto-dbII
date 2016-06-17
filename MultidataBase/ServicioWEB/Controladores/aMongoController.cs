@@ -87,7 +87,7 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string createTable(DBModel m, string table_name, string cll)
+        internal string createTable(DBModel m, string table_name, List<Column> cll)
         {
             conexion = new MongoConnect(m.port, m.server);
             try
@@ -95,7 +95,7 @@ namespace ServicioWEB.Controladores
                 string x = conexion.OpenConnection();
                 if (x.Equals("Connected"))
                 {
-                    conexion.createTable(m.alias,table_name,cll);
+                   
                     conexion.CloseConnection();
                 }
                 return x;
@@ -107,9 +107,24 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string deleteTable(DBModel model, string table_name)
+        internal string deleteTable(DBModel m, string table_name)
         {
-            throw new NotImplementedException();
+            conexion = new MongoConnect(m.port, m.server);
+            try
+            {
+                string x = conexion.OpenConnection();
+                if (x.Equals("Connected"))
+                {
+                    conexion.deleteTable(m.alias, table_name);
+                    conexion.CloseConnection();
+                }
+                return x;
+
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
         }
 
         internal string multipleQuery(DBModel model, object cll)
@@ -117,9 +132,25 @@ namespace ServicioWEB.Controladores
             throw new NotImplementedException();
         }
 
-        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        internal string insertValuesTable(DBModel m, string table_name, List<Value> cll)
         {
-            throw new NotImplementedException();
+             
+            conexion = new MongoConnect(m.port, m.server);
+            try
+            {
+                string x = conexion.OpenConnection();
+                if (x.Equals("Connected"))
+                {
+                    conexion.insertValues( m.alias,table_name, cll);
+                    conexion.CloseConnection();
+                }
+                return x;
+
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
         }
 
         internal string updateValuesTable(DBModel model, string table_name, List<Value> cll)

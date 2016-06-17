@@ -4,55 +4,57 @@
 </div>
 <div class="row">
     
-    <div class="panel"  ng-controller="multiController">
+    <div class="panel"  ng-controller="multiController" ng-init="getConnections()">
        
      
-        <form ng-init="getConnections()">
+       
             <div class="panel-heading text-center">
-                <a href="../App" type="button" class="btn btn-danger btn-lg pull-left"> <i class="fa fa-arrow-left"></i>Volver </a>
-
-                <h2>Mostrando las conexiones disponibles </h2>
-                <p>Click en "Actualizar" para mostrar las conexiones disponibles.</p>
-                <button type="submit" class="btn btn-warning btn-lg"> <i class="fa fa-refresh"></i> Actualizar</button>
-                <a href="../App/IncluirDB" class="btn btn-primary btn-lg "> <i class="fa fa-plug"></i> Insertar</a>
+                <a href="../App" type="button" class="btn btn-danger  pull-left"> <i class="fa fa-arrow-left"></i>Volver </a>&nbsp;
+                <a href="../App/VerConexiones" class="btn btn-default  pull-right "> <i class="fa fa-plug"></i> Actualizar</a>&nbsp;
+                <a href="../App/IncluirDB" class="btn btn-primary  pull-right"> <i class="fa fa-plug"></i> Insertar</a>
+               
             </div>
+        <hr />
 
-        </form>
-            
-      
+            <div class="panel-body text-center">
+                <div class="row">   
+                    <div class="col-md-3 panel panel-success" ng-repeat="col in connections">
+                          <div class="panel-heading">
+                              <h3>{{"ID<"+col.id + ">" +    "Tipo<"+col.db_type+">"}}</h3>
+                          </div>
+                        
+                             <h1> {{col.allias}}</h1><br />
+                             <span> {{"Usuario<"+col.usr+">"}}</span> <br />
+                             <span>{{"Server<" + col.server+">"}}</span>
 
-
-
-
-            <div class="panel-body">
-
-
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 ">
-                        <!--Html.Raw(ViewBag.connections) {var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
-                           var userInfoJson = jss.Serialize(ViewBag.User);
-                      }
-                    -->
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-repeat="col in connections">
-
-                                <span class="btn btn-default ">{{col.id}}</span>
-                                <span class="btn btn-primary">{{col.db_type}}</span>
-                                <span class="btn btn-success">{{col.allias}}</span>
-
-                                <span class="btn btn-default">{{ "Usuario < " + col.usr  + "> Server <" + col.server+">"}}</span>
-                          
-                               
-
-                                <span class="btn btn-danger pull-right"> <i class="fa fa-remove"></i> </span>
-                                <a href="../App/CrearTabla?id={{col.id}}" class="btn btn-success pull-right" data-toggle="tooltip" title="Crear una nueva tabla" data-placement="top"   > <i class="fa fa-plus"></i> </a>
-
-                                <!-- Modal -->
-                               
-                            </li>
-
-                        </ul>
+                            <div class="panel-footer">
+                                <a href="../App/CrearTabla?id={{col.id}}"    class="btn btn-success " data-toggle="tooltip" title="Crear una nueva tabla" data-placement="top"> <i class="fa fa-columns"></i> </a>
+                                <a href="../App/InsertarTabla?id={{col.id}}" class="btn btn-primary " data-toggle="tooltip" title="Insertar valores" data-placement="top"> <i class="fa fa-copy"></i> </a>
+                                <a  class="btn btn-danger " data-toggle="modal" data-target="#myModal{{col.id}}"> <i class="fa fa-remove"></i> </a>
+                            </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal{{col.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-title" id="myModalLabel" ng-init="myText=col.id">{{myText}}</h4>
+                                        Seguro que deseas eliminar este servidor? 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form ng-submit="deleteFromServer()">
+                                         <button class="btn btn-danger"  type="submit" id="submit" value="Delete"> Eliminar </button>
+                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </form>
+                                       
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

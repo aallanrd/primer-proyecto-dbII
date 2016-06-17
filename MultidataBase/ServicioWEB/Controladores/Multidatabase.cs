@@ -17,7 +17,10 @@ namespace ServicioWEB
         aMariaController controlMaria = new aMariaController();
         aMongoController controlMongo = new aMongoController();
 
-
+        public string deleteFromServer(int id)
+        {
+            return controlMaria.deleteServer(id);
+        }
         // Inserta (si esta disponible), una nueva conexión dentro 
         // de metadatadb
         public string includeDB(string jsonIDB)
@@ -118,7 +121,7 @@ namespace ServicioWEB
                 switch (model.dbType)
                 {
                     case "MariaDB": return controlMaria.createTable (model, table.table_name, cll);
-                    case "MongoDB": return controlMongo.createTable (model, table.table_name, columnas);
+                    case "MongoDB": return controlMongo.createTable (model, table.table_name, cll);
                     case "SQLDB": return controlSQL.createTable     (model, table.table_name, cll);
                     default: return "Cant Check";
                 }
@@ -221,7 +224,7 @@ namespace ServicioWEB
         {
             IVTable table = JsonConvert.DeserializeObject<IVTable>(jsonIVT);
             int idC = table.cID;
-            string valores = table.values;
+                string valores = table.values;
             var cll = JsonConvert.DeserializeObject<List<Modelo.Value>>(valores);
 
             DBModel model = controlMaria.getConnection(idC);

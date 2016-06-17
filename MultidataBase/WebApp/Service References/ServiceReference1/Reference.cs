@@ -74,6 +74,12 @@ namespace WebApp.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/deleteValuesTable", ReplyAction="http://tempuri.org/IService1/deleteValuesTableResponse")]
         System.Threading.Tasks.Task<string> deleteValuesTableAsync(string jsonCD);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/deleteFromServer", ReplyAction="http://tempuri.org/IService1/deleteFromServerResponse")]
+        string deleteFromServer(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/deleteFromServer", ReplyAction="http://tempuri.org/IService1/deleteFromServerResponse")]
+        System.Threading.Tasks.Task<string> deleteFromServerAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -181,6 +187,14 @@ namespace WebApp.ServiceReference1 {
         
         public System.Threading.Tasks.Task<string> deleteValuesTableAsync(string jsonCD) {
             return base.Channel.deleteValuesTableAsync(jsonCD);
+        }
+        
+        public string deleteFromServer(int id) {
+            return base.Channel.deleteFromServer(id);
+        }
+        
+        public System.Threading.Tasks.Task<string> deleteFromServerAsync(int id) {
+            return base.Channel.deleteFromServerAsync(id);
         }
     }
 }

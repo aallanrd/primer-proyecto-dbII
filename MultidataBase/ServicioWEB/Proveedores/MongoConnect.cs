@@ -86,18 +86,40 @@ namespace ServicioWEB
             }
         }
 
-        internal void createTable(string j, string table_name, String array)
+        internal void createTable(string j, string table_name, List<Column> array)
         {
             var database = _client.GetDatabase(j);
             var collection = database.GetCollection<BsonDocument>(table_name);
 
             BsonDocument document = new BsonDocument();
-            document.Add(new BsonElement("array", array));
-           // document.AddRange(BsonDocument.Parse(array));
+            for(int i=0; i<array.Count; i++) { 
+             document.Add(new BsonElement(array[i].name, array[i].type));
+            }
+            // document.AddRange(BsonDocument.Parse(array));
 
             collection.InsertOneAsync(document);
 
            
+        }
+
+        internal void insertValues(string j, string table_name, List<Value> array)
+        {
+            var database = _client.GetDatabase(j);
+            var collection = database.GetCollection<BsonDocument>(table_name);
+            BsonDocument document = new BsonDocument();
+            for (int i = 0; i < array.Count; i++)
+            {
+                document.Add(new BsonElement(array[i].Vcol, array[i].Vval));
+            }
+            collection.InsertOneAsync(document);
+        }
+
+        internal void deleteTable(string alias, string table_name)
+        {
+            var database = _client.GetDatabase(alias);
+            var collection = database.GetCollection<BsonDocument>(table_name);
+            var filter = new BsonDocument();
+            var result =  collection.DeleteMany(filter);
         }
     }
 }

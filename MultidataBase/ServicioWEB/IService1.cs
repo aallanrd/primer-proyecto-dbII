@@ -45,6 +45,8 @@ namespace ServicioWEB
         [OperationContract]
         string deleteValuesTable(string jsonCD);
 
+        [OperationContract]
+        string deleteFromServer(int id);
 
     }
 

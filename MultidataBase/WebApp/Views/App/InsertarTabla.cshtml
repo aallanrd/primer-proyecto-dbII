@@ -7,7 +7,7 @@
     <hr />
 
     <div class="col-lg-12 text-center" >
-        <form ng-submit="insertTable()">
+        <form ng-submit="insertValuesTable()">
             <a href="../App" type="button" class="btn btn-danger btn-lg pull-left"> <i class="fa fa-arrow-left"></i>Volver </a>
            aa {{cID}}
             <h2>Configuración </h2>
@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="col-lg-12 text-center">
-        <form ng-submit="addValue()">
+        <form ng-submit="addValueI()">
 
             <h2>Valores</h2>
 
@@ -35,7 +35,7 @@
 
                 <hr />
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="val in valores">
+                    <li class="list-group-item" ng-repeat="val in valoresI">
                         {{val.Vcol}}
                         <span class="badge pull-right">{{val.Vval}}</span>
                      

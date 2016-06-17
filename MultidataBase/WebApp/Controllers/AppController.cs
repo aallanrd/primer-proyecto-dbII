@@ -169,7 +169,14 @@ namespace WebApp.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult HttpDeleteFromServer(int id)
+        {
 
+            string x = client.deleteFromServer(id);
+            return new JsonResult { Data = x };
+
+        }
 
         public ActionResult CrearTabla()        { return View(); }
      

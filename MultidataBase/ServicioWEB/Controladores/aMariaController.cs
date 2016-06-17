@@ -342,9 +342,91 @@ namespace ServicioWEB.Controladores
             throw new NotImplementedException();
         }
 
-        internal string insertValuesTable(DBModel model, string table_name, List<Value> cll)
+        internal string insertValuesTable(DBModel db, string table_name, List<Value> cll)
         {
-            throw new NotImplementedException();
+            conexion = new MariaDBConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (conexion.OpenConnection().Equals("Connected"))
+            {
+                try
+                {
+                    string colums = "( ";
+
+                    int c = 0;
+
+                    while (c != cll.Count)
+                    {
+                        var x = cll[c];
+
+                        colums = colums + "'" + x.Vval + "'";
+
+
+                        if (c + 1 == cll.Count)
+                        {
+                            break;
+                        }
+                        else
+                        {
+
+                            colums = colums + ",";
+                        }
+                        c++;
+                    }
+
+                    colums = colums + ")";
+
+
+
+                    string colums1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + table_name + "'";
+
+                    MySqlCommand cmd2 = new MySqlCommand(colums1, conexion.connection);
+                    MySqlDataReader reader = cmd2.ExecuteReader();
+                    string nn = "(";
+                    int ci = 1;
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            nn = nn + reader.GetString(0);
+                            if (ci != cll.Count) { nn = nn + ","; }
+                            else { nn = nn + ")"; }
+
+                            ci = ci + 1;
+
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows found.");
+                    }
+
+
+
+                    reader.Close();
+                    //   conexion.CloseConnection();
+                    // conexion.OpenConnection();
+                    string Query = "INSERT into " + table_name + nn + "  VALUES " + colums;
+                    MySqlCommand cmd = new MySqlCommand(Query, conexion.connection);
+                    cmd.ExecuteNonQuery();
+
+                    conexion.CloseConnection();
+
+                    return "{ 'msg':  'Insertado de datos en tabla correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Insertado de datos en tabla correctamente'}";
+                }
+
+
+            }
+            else
+            {
+                return "Error conectando a la BD";
+            }
         }
 
         //Chequear que existe una conexion posible de mariaDB con el modelo del parámetro.
@@ -367,6 +449,43 @@ namespace ServicioWEB.Controladores
         internal string deleteValuesTable(DBModel model, string table_name, List<Value> cll)
         {
             throw new NotImplementedException();
+        }
+
+        public string deleteServer(int id)
+        {
+            if (conexion.OpenConnection().Equals("Connected"))
+            {
+
+                string Query = "Delete from servidores where id="+id+";";
+
+
+                MySqlCommand cmd = new MySqlCommand(Query, conexion.connection);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+
+                    conexion.CloseConnection();
+
+                    return "{ 'msg':  'Borrada correctamente'}";
+                }
+                catch (Exception e)
+                {
+                    return "{ 'msg':  'Error Insertando'}";
+                }
+
+
+
+            }
+
+            else
+
+            {
+
+
+                conexion.CloseConnection();
+                return "No hay conexion con la base de datos : metadata";
+            }
         }
     }
 

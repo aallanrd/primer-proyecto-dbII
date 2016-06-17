@@ -32,5 +32,7 @@ namespace ServicioWEB
         string getConecctions       (               );
 
         string checkConnection      (int cID        );
+
+        string deleteFromServer(int id);
     }
 }

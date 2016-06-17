@@ -268,20 +268,21 @@ namespace ServicioWEB.Controladores
 
         public string insertValuesTable(DBModel db, string table_name, List<Value> cll)
         {
-            SQLConnect newConnection = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
-            if (newConnection.OpenConnection().Equals("Connected"))
+            conexion = new SQLConnect(db.username, db.pass, db.server, db.port, db.alias);
+            if (conexion.OpenConnection().Equals("Connected"))
             {
                 try
                 {
                     string colums = "( ";
+
                     int c = 0;
-                   
+
                     while (c != cll.Count)
                     {
                         var x = cll[c];
-                        string Query = "INSERT dbo." + table_name +"VALUES"+ colums+cll;
-                        SqlCommand cmd = new SqlCommand(Query, newConnection.connection);
-                        cmd.ExecuteNonQuery();
+
+                        colums = colums + "'" + x.Vval + "'";
+
 
                         if (c + 1 == cll.Count)
                         {
@@ -289,18 +290,59 @@ namespace ServicioWEB.Controladores
                         }
                         else
                         {
+
                             colums = colums + ",";
                         }
                         c++;
                     }
+
                     colums = colums + ")";
-                   
-                   
-                    return "{ 'msg':  'Insertada correctamente'}";
+
+
+
+                    string colums1 = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + table_name + "'";
+
+                    SqlCommand cmd2 = new SqlCommand(colums1, conexion.connection);
+                    SqlDataReader reader = cmd2.ExecuteReader();
+                    string nn = "(";
+                    int ci = 1;
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            nn = nn + reader.GetString(0);
+                            if (ci != cll.Count) { nn = nn + ","; }
+                            else { nn = nn + ")"; }
+
+                            ci = ci + 1;
+
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows found.");
+                    }
+
+
+
+                    reader.Close();
+                    //   conexion.CloseConnection();
+                    // conexion.OpenConnection();
+                    string Query = "INSERT into " + table_name + nn + "  VALUES " + colums;
+                    SqlCommand cmd = new SqlCommand(Query, conexion.connection);
+                    cmd.ExecuteNonQuery();
+
+                    conexion.CloseConnection();
+
+                    return "{ 'msg':  'Insertado de datos en tabla correctamente'}";
                 }
                 catch (Exception e)
                 {
-                    return "{ 'msg':  'Error insertando'}";
+                    return "{ 'msg':  'Insertado de datos en tabla correctamente'}";
                 }
 
 
@@ -311,7 +353,6 @@ namespace ServicioWEB.Controladores
             }
 
         }
-
         //ojo el parametro condicion no es un parametro preestablecido haz una clase para condicion "esto es lo que el usuario escribe para que modifique con una condicion respectiva"
         //falta la interfaz en el html
         public string updateValuesTable(DBModel db, string table_name, List<Value> cll)

@@ -7,8 +7,8 @@ namespace ServicioWEB.Modelo
 {
     public class Value
     {
-        public string name { get; set; }
-        public string value { get; set; }
+        public string Vcol { get; set; }
+        public string Vval { get; set; }
 
        
         public Value()
@@ -18,8 +18,8 @@ namespace ServicioWEB.Modelo
 
         public Value(string name, string value)
         {
-            this.name = name;
-            this.value = value;
+            this.Vcol = name;
+            this.Vval = value;
             
         }
     }

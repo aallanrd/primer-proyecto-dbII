@@ -9,18 +9,26 @@ multiDBApp.controller('multiController', function ($scope,$http) {
     $scope.valoresU = [];
     $scope.valoresD = [];
     $scope.Querys = [];
+    $scope.CO = [];
  
     $scope.id;
+    $scope.myText;
     //var j = $location.search().id;
 
-    $scope.iniciar = function () {
-        $scope.cID = j;
-    };
+
+   
 
     $scope.addColumn = function () {
         $scope.todas.push({ name: $scope.Cname, type: $scope.Ctype, length: $scope.Clength });
   
     };
+
+
+    $scope.addValueTable = function () {
+        $scope.valoresI.push({ Vcol: $scope.vCol, Vval: $scope.Vval });
+
+    };
+
 
     $scope.addValueI = function () {
         $scope.valoresI.push({ Vcol: $scope.Vcol, Vval: $scope.Vval });
@@ -119,16 +127,16 @@ multiDBApp.controller('multiController', function ($scope,$http) {
     $scope.insertValuesTable = function () {
 
 
-        var json = JSON.stringify($scope.valores);
+        var json = JSON.stringify(this.valoresI);
 
         $http.post('../App/HttpInsertValueTable?cID=' + $scope.cID + '&table_name=' + $scope.name +
             '&values=' + json,
             { data: {} })
         .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
+            alert(data);
         })
         .error(function (data, status, headers, config) {
-            alert("Ups! Hubo un error en la solicitud REST");
+            alert(data);
 
         });
     }
@@ -196,6 +204,24 @@ multiDBApp.controller('multiController', function ($scope,$http) {
             })
             .error(function (data, status, headers, config) {
                 alert("Ups! Hubo un error en la solicitud REST");
+
+            });
+
+    };
+
+    $scope.deleteFromServer = function () {
+
+        // $scope.connections = [];
+        $http.post('../App/HttpDeleteFromServer?id=' + this.myText,
+
+                { data: {} })
+            .success(function (data, status, headers, config) {
+                alert(data);
+                $scope.connections = JSON.parse(data);
+            })
+            .error(function (data, status, headers, config) {
+                alert(data);
+                //alert("Ups! Hubo un error en la solicitud REST");
 
             });
 
