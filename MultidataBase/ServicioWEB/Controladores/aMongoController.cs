@@ -75,6 +75,7 @@ namespace ServicioWEB.Controladores
                string x =  conexion.OpenConnection();
                 if (x.Equals("Connected"))
                 {
+                    
                     conexion.CloseConnection();
                 }
                 return x;
@@ -86,7 +87,7 @@ namespace ServicioWEB.Controladores
             }
         }
 
-        internal string createTable(DBModel m, string table_name, List<Column> cll)
+        internal string createTable(DBModel m, string table_name, string cll)
         {
             conexion = new MongoConnect(m.port, m.server);
             try
@@ -94,6 +95,7 @@ namespace ServicioWEB.Controladores
                 string x = conexion.OpenConnection();
                 if (x.Equals("Connected"))
                 {
+                    conexion.createTable(m.alias,table_name,cll);
                     conexion.CloseConnection();
                 }
                 return x;

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Collections;
-
-
+using ServicioWEB.Modelo;
 
 namespace ServicioWEB
 {
@@ -72,10 +71,6 @@ namespace ServicioWEB
 
         }
 
-
-
-
-
         //Close connection
         public bool CloseConnection()
         {
@@ -89,6 +84,20 @@ namespace ServicioWEB
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        internal void createTable(string j, string table_name, String array)
+        {
+            var database = _client.GetDatabase(j);
+            var collection = database.GetCollection<BsonDocument>(table_name);
+
+            BsonDocument document = new BsonDocument();
+            document.Add(new BsonElement("array", array));
+           // document.AddRange(BsonDocument.Parse(array));
+
+            collection.InsertOneAsync(document);
+
+           
         }
     }
 }

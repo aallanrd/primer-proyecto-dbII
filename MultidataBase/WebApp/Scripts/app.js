@@ -2,13 +2,21 @@
 
 multiDBApp.controller('multiController', function ($scope,$http) {
 
-    
+   // 
+
     $scope.todas = [];
     $scope.valoresI = [];
     $scope.valoresU = [];
     $scope.valoresD = [];
     $scope.Querys = [];
-    
+ 
+    $scope.id;
+    //var j = $location.search().id;
+
+    $scope.iniciar = function () {
+        $scope.cID = j;
+    };
+
     $scope.addColumn = function () {
         $scope.todas.push({ name: $scope.Cname, type: $scope.Ctype, length: $scope.Clength });
   
@@ -35,6 +43,8 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
     };
 
+  
+
     $scope.includeDB = function () {
 
         shuffle_b(false);
@@ -56,23 +66,25 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
         });
 
-
-
-
     }
     $scope.createDB = function () {
+
+        alert($scope.cID);
+        alert($scope.db_name);
 
         $http.post('../App/HttpCreateDB?cID=' + $scope.cID + '&db_name=' + $scope.db_name,
             { data: {} })
         .success(function (data, status, headers, config) {
 
-            alert("Listo! Parece que todo salió bien");
+            alert(data);
         })
         .error(function (data, status, headers, config) {
             alert("Ups! Hubo un error en la solicitud REST");
 
         });
     }
+    
+
     $scope.createTable = function () {
 
 
@@ -81,10 +93,10 @@ multiDBApp.controller('multiController', function ($scope,$http) {
         $http.post('../App/HttpCreateTable?cID=' + $scope.cID + '&name=' + $scope.name + '&columns=' + json,
             { data: {} })
         .success(function (data, status, headers, config) {
-            alert("Listo! Parece que todo salió bien");
+            alert(data);
         })
         .error(function (data, status, headers, config) {
-            alert("Ups! Hubo un error en la solicitud REST");
+            alert(data);
             
         });
        
@@ -170,13 +182,24 @@ multiDBApp.controller('multiController', function ($scope,$http) {
 
             });
 
-        };
+    };
 
-    
+    $scope.getConnections = function () {
 
+       // $scope.connections = [];
+        $http.post('../App/HttpGetConnections',
 
+                { data: {} })
+            .success(function (data, status, headers, config) {
+               // alert(data);
+                $scope.connections =  JSON.parse(data);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Ups! Hubo un error en la solicitud REST");
 
+            });
 
+    };
 
 }).config(function ($httpProvider) {
     $httpProvider.defaults.headers.post = {};

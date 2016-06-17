@@ -118,7 +118,7 @@ namespace ServicioWEB
                 switch (model.dbType)
                 {
                     case "MariaDB": return controlMaria.createTable (model, table.table_name, cll);
-                    case "MongoDB": return controlMongo.createTable (model, table.table_name, cll);
+                    case "MongoDB": return controlMongo.createTable (model, table.table_name, columnas);
                     case "SQLDB": return controlSQL.createTable     (model, table.table_name, cll);
                     default: return "Cant Check";
                 }

@@ -4,35 +4,62 @@
 </div>
 <div class="row">
     
-    <div class="panel">
+    <div class="panel"  ng-controller="multiController">
        
-            <form>
-            <div class="panel-heading text-center" >
+     
+        <form ng-init="getConnections()">
+            <div class="panel-heading text-center">
                 <a href="../App" type="button" class="btn btn-danger btn-lg pull-left"> <i class="fa fa-arrow-left"></i>Volver </a>
 
                 <h2>Mostrando las conexiones disponibles </h2>
                 <p>Click en "Actualizar" para mostrar las conexiones disponibles.</p>
-
-                
-                <a href="../App/VerConexiones" class="btn btn-primary btn-lg"> Actualizar </a>
+                <button type="submit" class="btn btn-warning btn-lg"> <i class="fa fa-refresh"></i> Actualizar</button>
+                <a href="../App/IncluirDB" class="btn btn-primary btn-lg "> <i class="fa fa-plug"></i> Insertar</a>
             </div>
+
+        </form>
+            
+      
+
+
+
+
             <div class="panel-body">
 
 
                 <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4 ">
-                        <pre>
-                        @ViewBag.connections
-                 
-                    </pre>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 ">
+                        <!--Html.Raw(ViewBag.connections) {var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+                           var userInfoJson = jss.Serialize(ViewBag.User);
+                      }
+                    -->
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="col in connections">
+
+                                <span class="btn btn-default ">{{col.id}}</span>
+                                <span class="btn btn-primary">{{col.db_type}}</span>
+                                <span class="btn btn-success">{{col.allias}}</span>
+
+                                <span class="btn btn-default">{{ "Usuario < " + col.usr  + "> Server <" + col.server+">"}}</span>
+                          
+                               
+
+                                <span class="btn btn-danger pull-right"> <i class="fa fa-remove"></i> </span>
+                                <a href="../App/CrearTabla?id={{col.id}}" class="btn btn-success pull-right" data-toggle="tooltip" title="Crear una nueva tabla" data-placement="top"   > <i class="fa fa-plus"></i> </a>
+
+                                <!-- Modal -->
+                               
+                            </li>
+
+                        </ul>
                     </div>
                 </div>
 
             </div>
-           
-        </form>
-        
-    </div>
+
+
+
+</div>
     
 </div>

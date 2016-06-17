@@ -145,17 +145,11 @@ namespace ServicioWEB.Controladores
                     {
                         var x = array[c];
                         colums = colums + x.name + " " + x.type + " (" + x.length + ")";
-                        if(c+1 == array.Count)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            colums = colums + ",";
-                        }
+                        if(c+1 == array.Count){  break; } else{ colums = colums + ",";}
                         c++;
                     }
                     colums = colums + ")";
+
                     string Query = "create table " + table_name + colums;
 
                     MySqlCommand cmd = new MySqlCommand(Query, newConnection.connection);
@@ -165,7 +159,7 @@ namespace ServicioWEB.Controladores
                 }
                 catch (Exception e)
                 {
-                    return "{ 'msg':  'Error insertando'}";
+                    return "{ 'msg':  'Error insertando'}" + e;
                 }
 
 
